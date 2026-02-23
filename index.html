@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="OSBPDeck — OSBP-branded interactive presentation: SnagIt, Video Production, and AI Video with Synthesia."/>
+<title>OSBPDeck — OSBP Unified Presentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="preload" href="era-2001.jpg" as="image">
+<link rel="preload" href="era-2006.jpg" as="image">
+<link rel="preload" href="era-2011.jpg" as="image">
+<link rel="preload" href="era-2016.jpg" as="image">
+<link rel="preload" href="era-2021.jpg" as="image">
+<link rel="preload" href="era-2026.jpg" as="image">
+<style>
+:root {
+  --space-blue:   #15263B;
+  --osbp-blue:    #17375E;
+  --dod-blue:     #355E93;
+  --cadet-blue:   #728FB4;
+  --sky-blue:     #ACC8EB;
+  --hazy-blue:    #EBEFF5;
+  --osbp-red:     #C00000;
+  --flame-red:    #E3343B;
+  --sunrise-gold: #F5CC00;
+  --sunset-gold:  #CCA000;
+  --dod-white:    #FFFFFF;
+  --harbor-gray:  #EBEBEB;
+  --smoke-gray:   #ADADAD;
+  --anchor-gray:  #717171;
+  --dod-gray:     #333333;
+  --dod-black:    #141414;
+  --blue:      var(--osbp-blue);
+  --blue-mid:  var(--dod-blue);
+  --blue-lt:   var(--cadet-blue);
+  --blue-bg:   var(--hazy-blue);
+  --red:       var(--osbp-red);
+  --red-mid:   var(--flame-red);
+  --red-bg:    #fdeaec;
+  --white:     var(--dod-white);
+  --off-white: #F2F5FA;
+  --cream:     var(--hazy-blue);
+  --ink:       var(--space-blue);
+  --ink2:      var(--dod-blue);
+  --border:    var(--sky-blue);
+  --green:     #1a7a4a;
+  --green-bg:  #e6f4ec;
+  --shadow:    0 2px 12px rgba(21,38,59,.09);
+  --shadow-lg: 0 8px 40px rgba(21,38,59,.18);
+  --radius:    10px;
+  --font-display: 'Oswald', 'Lato', sans-serif;
+  --font-body:    'Lato', sans-serif;
+  --font-serif:   'Crimson Text', Georgia, serif;
+  --transition: .2s cubic-bezier(.4,0,.2,1);
+  --paper:   var(--off-white);
+  --card:    var(--dod-white);
+  --accent:  var(--dod-blue);
+  --gold:    var(--sunset-gold);
+}
+*, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+body { font-family: var(--font-body); background: var(--paper); color: var(--ink); min-height: 100vh; transition: background var(--transition); }
+
+/* ─── TOPBAR ─────────────────────────────────────────────── */
+#topbar {
+  background: linear-gradient(135deg, var(--space-blue) 0%, var(--osbp-blue) 100%);
+  color: #fff; display: flex; align-items: center; gap: 10px;
+  padding: 10px 20px; position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 16px rgba(21,38,59,.45); border-bottom: 3px solid var(--sunrise-gold);
+}
+#topbar .brand { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #fff; flex: 0 0 auto; cursor: pointer; }
+#topbar .brand span { color: var(--sunrise-gold); }
+.tb-sep { width: 1px; height: 22px; background: rgba(255,255,255,.18); flex-shrink: 0; }
+.tb-spacer { flex: 1; }
+.tb-btn { display: flex; align-items: center; gap: 5px; padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,.2); background: transparent; color: rgba(255,255,255,.88); font-family: var(--font-body); font-size: .8rem; font-weight: 500; cursor: pointer; transition: all var(--transition); }
+.tb-btn:hover { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.35); }
+.tb-btn.fullscreen-active { background: var(--blue-lt); border-color: var(--blue-lt); color: #fff; }
+
+/* Custom dropdown menus */
+.tb-dd-wrap { position: relative; display: inline-flex; }
+.tb-dd-btn { display: flex; align-items: center; gap: 5px; padding: 6px 10px; border-radius: 7px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.07); color: #fff; font-family: var(--font-body); font-size: .8rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background .14s, border-color .14s; }
+.tb-dd-btn:hover, .tb-dd-wrap.open > .tb-dd-btn { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.4); }
+.tb-dd-muted { font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.55); }
+.tb-dd-gold { border-color: rgba(245,204,0,.35); color: #F5CC00; }
+.tb-dd-gold:hover, .tb-dd-wrap.open > .tb-dd-gold { background: rgba(245,204,0,.12); border-color: rgba(245,204,0,.6); }
+.tb-caret { transition: transform .16s ease; flex-shrink: 0; color: rgba(255,255,255,.6); }
+.tb-dd-wrap.open > .tb-dd-btn .tb-caret { transform: rotate(180deg); }
+.tb-dd-menu { display: none; position: absolute; top: calc(100% + 6px); left: 0; min-width: 210px; background: #0f1b2d; border: 1px solid rgba(255,255,255,.18); border-radius: 10px; box-shadow: 0 14px 44px rgba(0,0,0,.6); padding: 5px; z-index: 9999; }
+.tb-dd-right { left: auto; right: 0; }
+.tb-dd-wrap.open > .tb-dd-menu { display: block; }
+.tb-dd-item { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 11px; border-radius: 7px; border: none; background: transparent; color: rgba(255,255,255,.9); font-family: var(--font-body); font-size: .82rem; font-weight: 500; cursor: pointer; text-align: left; white-space: nowrap; transition: background .12s; }
+.tb-dd-item:hover { background: rgba(255,255,255,.1); color: #fff; }
+.tb-dd-active { background: rgba(245,204,0,.15); color: #F5CC00 !important; font-weight: 700; }
+.tb-dd-divider { height: 1px; background: rgba(255,255,255,.1); margin: 4px 6px; }
+
+/* ─── DECK PANELS ────────────────────────────────────────── */
+#deck-snagit, #deck-videoprod, #deck-synthesia { display: none; }
+body.active-deck-snagit #deck-snagit { display: block; }
+body.active-deck-videoprod #deck-videoprod { display: block; }
+body.active-deck-synthesia #deck-synthesia { display: block; }
+
+/* ─── SYNTHESIA-STYLE DECK (shared by all 3 decks) ────── */
+.syn-canvas { max-width: 1160px; margin: 0 auto; padding: 24px 32px 40px; }
+.syn-header { margin-bottom: 20px; padding-bottom: 14px; border-bottom: 2px solid var(--sky-blue); position: relative; }
+.syn-header::after { content:''; position:absolute; bottom:-2px; left:0; width:80px; height:2px; background:#F5CC00; }
+.syn-header h1 { font-family:'Lato',sans-serif; font-size:2.8rem; font-weight:700; color:#1a3a5c; letter-spacing:.02em; }
+.syn-header .subtitle { color:#3a6a8a; font-size:1.1rem; margin-top:6px; font-weight:300; }
+.syn-tabs { display:flex; gap:6px; margin-bottom:16px; flex-wrap:wrap; }
+.syn-tab { padding:10px 20px; border-radius:8px; border:1px solid var(--border); background:var(--white); color:#15263B; font-family:'Lato',sans-serif; font-size:1rem; font-weight:600; cursor:pointer; transition:all var(--transition); display:flex; align-items:center; gap:6px; }
+.syn-tab:hover { background:var(--blue-bg); border-color:var(--blue-mid); }
+.syn-tab.active { background:#15263B; color:#fff; border-color:#15263B; border-bottom:2px solid #F5CC00; }
+.syn-section { display:none; animation: synFadeIn .3s ease; }
+.syn-section.active { display:block; }
+@keyframes synFadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+.syn-section-header { margin-bottom:12px; }
+.syn-section-title { font-family:'Lato',sans-serif; font-size:1.4rem; font-weight:600; color:#1a3a5c; letter-spacing:.06em; text-transform:uppercase; }
+.syn-cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); gap:28px; }
+.syn-card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:24px; transition:box-shadow var(--transition); }
+.syn-card:hover { box-shadow: var(--shadow); }
+.syn-card-title { font-family:'Lato',sans-serif; font-size:1.1rem; font-weight:600; color:#15263B; letter-spacing:.08em; text-transform:uppercase; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+.syn-card-subtitle { font-size: .88rem; color: var(--ink2); margin-bottom: 12px; }
+.syn-card ul { list-style:none; padding:0; }
+.syn-card li { position:relative; padding:10px 0 10px 22px; font-size:1.05rem; line-height:1.7; color:#15263B; }
+.syn-card li::before { content:''; position:absolute; left:0; top:15px; width:7px; height:7px; border-radius:50%; background:#15263B; }
+.syn-card li strong { font-weight:700; }
+.syn-stats { display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; margin-top:8px; }
+@media (max-width: 800px) { .syn-stats { grid-template-columns: repeat(2, 1fr); } }
+.syn-stat { text-align:center; padding:18px 10px; border:1px solid var(--border); border-radius:var(--radius); background:var(--off-white); }
+.syn-stat-value { font-family:'Lato',sans-serif; font-size:1.9rem; font-weight:700; color:#15263B; }
+.syn-stat-label { font-size:.85rem; color:#15263B; margin-top:4px; }
+
+/* Compare table (syn style) */
+.syn-compare { width:100%; border-collapse:collapse; margin-top:8px; }
+.syn-compare th { font-family:'Lato',sans-serif; font-size:1rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:#15263B; text-align:left; padding:14px 18px; border-bottom:2px solid var(--border); background:var(--off-white); }
+.syn-compare td { padding:14px 18px; border-bottom:1px solid var(--border); font-family:'Lato',sans-serif; font-size:1.05rem; color:#15263B; }
+.syn-compare .aspect { font-weight:700; color:#15263B; }
+.syn-compare .bad  { color: var(--osbp-red); }
+.syn-compare .good { color: var(--green); font-weight:600; }
+.syn-compare tr:hover td { background:var(--blue-bg); }
+
+/* Video sections */
+.syn-video-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+@media (max-width: 800px) { .syn-video-grid { grid-template-columns:1fr; } }
+.syn-video-box { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:20px; text-align:center; }
+.syn-video-box h3 { font-family:'Lato',sans-serif; font-size:1.1rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin-bottom:14px; color:#15263B; }
+.syn-video-single { max-width: 1000px; margin: 0 auto; }
+.syn-video-single video { width: 100%; border-radius: 8px; }
+.syn-video-placeholder { font-size: .82rem; color: var(--anchor-gray); font-style: italic; margin-top: 8px; }
+
+/* Notes */
+.syn-notes { display:flex; flex-direction:column; gap:12px; }
+.syn-note { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:16px 20px; display:flex; gap:14px; align-items:flex-start; }
+.syn-note-tag { flex-shrink:0; font-family:'Lato',sans-serif; font-size:.85rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#15263B; background:var(--blue-bg); padding:4px 10px; border-radius:5px; }
+.syn-note-text { font-family:'Lato',sans-serif; font-size:1.05rem; line-height:1.6; color:#15263B; }
+
+/* Reveal animation classes */
+.syn-reveal-item { opacity: 0; transform: translateY(16px); transition: opacity 300ms ease, transform 300ms ease; pointer-events: none; }
+.syn-reveal-item.syn-revealed { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.syn-reveal-bullet { opacity: 0; transform: translateX(-8px); transition: opacity 250ms ease, transform 250ms ease; }
+.syn-reveal-bullet.syn-revealed { opacity: 1; transform: translateX(0); }
+
+/* PDF Viewer */
+.pdf-viewer-wrap { border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(21,38,59,.12); margin: 12px 0; }
+.pdf-viewer { width: 100%; height: 600px; border: none; border-radius: 8px; }
+.pdf-download-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; padding: 10px 22px; border-radius: 8px; border: 1px solid var(--border); background: var(--off-white); color: var(--ink); font-family: var(--font-body); font-size: .92rem; font-weight: 600; cursor: pointer; text-decoration: none; transition: all var(--transition); }
+.pdf-download-btn:hover { background: var(--blue-bg); border-color: var(--blue-mid); color: var(--blue-mid); }
+
+/* ─── TIMELINE (Video Production deck) — Apple/Sony polish ─── */
+.tl-wrap { margin-top: 24px; }
+
+/* Era card — glassmorphic, spacious */
+.tl-era-wrap { display: flex; gap: 32px; min-height: 200px; align-items: stretch; padding: 32px;
+  background: linear-gradient(135deg, var(--off-white) 0%, #f8f9fc 100%);
+  border-radius: 16px; border: 1px solid var(--border);
+  margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,.04);
+  transition: all .4s ease; }
+.tl-era-wrap:hover { box-shadow: 0 6px 24px rgba(0,0,0,.08); transform: translateY(-1px); }
+@media (max-width: 800px) { .tl-era-wrap { flex-direction: column; padding: 20px; } }
+
+/* Left column — wider for image + info */
+.tl-era-left { flex: 0 0 300px; display: flex; flex-direction: column; gap: 12px; }
+
+/* Era illustration — large, crisp */
+.tl-era-illus { font-size: 3.5rem; margin-bottom: 4px; line-height: 1; }
+
+/* Era image placeholder — for AI-generated images */
+.tl-era-img { width: 100%; height: 200px; border-radius: 12px; object-fit: cover;
+  background: linear-gradient(135deg, #e8edf5 0%, #dce3ee 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; color: var(--ink2); overflow: hidden; border: 1px solid var(--border); }
+.tl-era-img img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Title — much larger, bolder */
+.tl-era-title { font-family: var(--font-display); font-size: 1.75rem; font-weight: 700; color: var(--ink);
+  text-transform: uppercase; letter-spacing: .03em; line-height: 1.2; }
+
+/* Badges — larger, more readable */
+.tl-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+.tl-badge { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; text-align: center;
+  min-width: 100px; box-shadow: 0 1px 4px rgba(0,0,0,.04); }
+.tl-badge-label { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--ink2); }
+.tl-badge-value { font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-top: 4px; }
+
+/* Right column */
+.tl-era-right { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+/* Description text — larger, readable */
+.tl-era-text { font-size: 1.15rem; line-height: 1.7; color: var(--ink2); margin-bottom: 16px; }
+
+/* Progress bar — thicker, smoother */
+.tl-bar-wrap { margin-top: 12px; }
+.tl-bar-track { height: 10px; background: var(--harbor-gray); border-radius: 5px; overflow: hidden; }
+.tl-bar-fill { height: 100%; background: linear-gradient(90deg, var(--osbp-red), var(--flame-red)); border-radius: 5px; transition: width .6s cubic-bezier(.4,0,.2,1); }
+.tl-bar-legend { display: flex; justify-content: space-between; font-size: .78rem; color: var(--anchor-gray); margin-top: 6px; font-weight: 500; }
+
+/* Cost overlay — larger badge */
+.tl-cost-overlay { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; padding: 8px 14px;
+  background: rgba(245,204,0,.12); border: 1px solid rgba(245,204,0,.3); border-radius: 8px;
+  font-size: .95rem; font-weight: 700; color: var(--sunset-gold); }
+
+/* You Are Here — pulsing indicator */
+.tl-youarehere { display: none; margin-top: 10px; padding: 10px 16px; border-radius: 8px;
+  background: rgba(227,52,59,.1); border: 1px solid rgba(227,52,59,.3); font-size: .95rem; font-weight: 700;
+  color: var(--flame-red); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .6; } }
+
+/* Year ticks — pill-shaped era buttons */
+.tl-ticks { display: flex; justify-content: space-between; margin-bottom: 12px; gap: 8px; }
+.tl-tick { flex: 1; padding: 12px 8px; border-radius: 10px; border: 1px solid var(--border); background: var(--white);
+  font-size: 1rem; font-weight: 700; color: var(--ink2); cursor: pointer; transition: all .25s ease;
+  text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,.04); }
+.tl-tick:hover { border-color: var(--blue-mid); color: var(--blue-mid); background: var(--blue-bg); transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,.08); }
+.tl-tick.active { background: var(--ink); color: #fff; border-color: var(--ink); box-shadow: 0 3px 12px rgba(21,38,59,.3); transform: translateY(-1px); }
+
+/* Slider row */
+.tl-slider-row { display: flex; align-items: center; gap: 16px; margin-top: 4px; }
+.tl-year-badge { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--ink); min-width: 56px; }
+.tl-slider { flex: 1; accent-color: var(--osbp-red); height: 6px; }
+
+/* Effort shrink bar — taller, clearer */
+.tl-effort-bar { margin-top: 16px; }
+.tl-effort-track { display: flex; align-items: center; gap: 10px; }
+.tl-effort-fill { height: 30px; background: linear-gradient(90deg, var(--dod-blue), var(--cadet-blue));
+  border-radius: 6px; transition: width .6s cubic-bezier(.4,0,.2,1); display: flex; align-items: center;
+  justify-content: flex-end; padding-right: 10px; color: #fff; font-size: .85rem; font-weight: 700; min-width: 48px;
+  box-shadow: 0 2px 8px rgba(53,94,147,.25); }
+.tl-effort-label { font-size: .88rem; color: var(--ink2); font-weight: 600; }
+
+/* ─── FULLSCREEN MODE ────────────────────────────────────── */
+body.fullscreen-mode { overflow: hidden; background: var(--space-blue); background-image: radial-gradient(ellipse 80% 60% at 15% 20%, rgba(53,94,147,.32) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 85% 85%, rgba(192,0,0,.14) 0%, transparent 55%), radial-gradient(ellipse 40% 40% at 70% 10%, rgba(245,204,0,.07) 0%, transparent 50%), linear-gradient(160deg, var(--dod-black) 0%, var(--space-blue) 50%, var(--osbp-blue) 100%); min-height: 100vh; }
+body.fullscreen-mode #topbar { display: none; }
+body.fullscreen-mode .syn-canvas { max-width: 96vw; width: 96vw; padding: 40px 2vw 90px; margin: 0 auto; }
+body.fullscreen-mode .syn-header { border-bottom-color: rgba(255,255,255,.12); }
+body.fullscreen-mode .syn-header::after { background: var(--sunrise-gold); }
+body.fullscreen-mode .syn-header h1 { color: #fff; }
+body.fullscreen-mode .syn-header .subtitle { color: rgba(255,255,255,.6); }
+body.fullscreen-mode .syn-tab { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.15); color: rgba(255,255,255,.7); }
+body.fullscreen-mode .syn-tab:hover { background: rgba(255,255,255,.12); color: #fff; }
+body.fullscreen-mode .syn-tab.active { background: rgba(255,255,255,.15); color: #fff; border-color: rgba(255,255,255,.25); border-bottom: 2px solid #F5CC00; }
+body.fullscreen-mode .syn-section-title { color: rgba(255,255,255,.85); }
+body.fullscreen-mode .syn-card { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.1); }
+body.fullscreen-mode .syn-card-title { color: rgba(255,255,255,.7); border-bottom-color: rgba(255,255,255,.1); }
+body.fullscreen-mode .syn-card li { color: rgba(255,255,255,.85); }
+body.fullscreen-mode .syn-card li::before { background: rgba(255,255,255,.5); }
+body.fullscreen-mode .syn-card li strong { color: #fff; }
+body.fullscreen-mode .syn-stat { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1); }
+body.fullscreen-mode .syn-stat-value { color: #fff; }
+body.fullscreen-mode .syn-stat-label { color: rgba(255,255,255,.5); }
+body.fullscreen-mode .syn-video-box { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.1); }
+body.fullscreen-mode .syn-video-box h3 { color: rgba(255,255,255,.8); }
+body.fullscreen-mode .syn-note { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.1); }
+body.fullscreen-mode .syn-note-tag { background: rgba(53,94,147,.3); color: rgba(172,200,235,.9); }
+body.fullscreen-mode .syn-note-text { color: rgba(255,255,255,.8); }
+body.fullscreen-mode .syn-compare th { background: rgba(255,255,255,.1); color: rgba(255,255,255,.88); border-bottom-color: rgba(255,255,255,.18); }
+body.fullscreen-mode .syn-compare td { color: rgba(255,255,255,.82); border-bottom-color: rgba(255,255,255,.07); }
+body.fullscreen-mode .syn-compare .aspect { color: #fff; }
+body.fullscreen-mode .syn-compare .bad { color: #ff8a92; }
+body.fullscreen-mode .syn-compare .good { color: #6edba8; }
+body.fullscreen-mode .pdf-viewer-wrap { box-shadow: 0 4px 20px rgba(0,0,0,.4); }
+body.fullscreen-mode .pdf-download-btn { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); color: rgba(255,255,255,.8); }
+body.fullscreen-mode .pdf-download-btn:hover { background: rgba(255,255,255,.2); color: #fff; }
+body.fullscreen-mode .syn-card-subtitle { color: rgba(255,255,255,.5); }
+/* Timeline in fullscreen */
+body.fullscreen-mode .tl-era-wrap { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.1); box-shadow: 0 4px 20px rgba(0,0,0,.3); }
+body.fullscreen-mode .tl-era-wrap:hover { box-shadow: 0 8px 32px rgba(0,0,0,.4); }
+body.fullscreen-mode .tl-era-title { color: #fff; }
+body.fullscreen-mode .tl-era-text { color: rgba(255,255,255,.8); }
+body.fullscreen-mode .tl-era-img { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1); color: rgba(255,255,255,.4); }
+body.fullscreen-mode .tl-badge { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.12); box-shadow: none; }
+body.fullscreen-mode .tl-badge-label { color: rgba(255,255,255,.5); }
+body.fullscreen-mode .tl-badge-value { color: #fff; }
+body.fullscreen-mode .tl-tick { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.15); color: rgba(255,255,255,.6); box-shadow: none; }
+body.fullscreen-mode .tl-tick:hover { color: #fff; border-color: rgba(255,255,255,.4); background: rgba(255,255,255,.12); }
+body.fullscreen-mode .tl-tick.active { background: rgba(255,255,255,.2); color: #F5CC00; border-color: rgba(245,204,0,.5); box-shadow: 0 3px 12px rgba(245,204,0,.2); }
+body.fullscreen-mode .tl-bar-track { background: rgba(255,255,255,.1); }
+body.fullscreen-mode .tl-bar-legend span { color: rgba(255,255,255,.45); }
+body.fullscreen-mode .tl-year-badge { color: #fff; }
+body.fullscreen-mode .tl-effort-fill { background: linear-gradient(90deg, var(--sunrise-gold), var(--sunset-gold)); box-shadow: 0 2px 8px rgba(245,204,0,.3); }
+body.fullscreen-mode .tl-effort-label { color: rgba(255,255,255,.6); }
+body.fullscreen-mode .syn-video-placeholder { color: rgba(255,255,255,.4); }
+
+/* Fullscreen deck overlay (all decks use same z-index pattern) */
+body.fullscreen-mode #deck-snagit,
+body.fullscreen-mode #deck-videoprod,
+body.fullscreen-mode #deck-synthesia {
+  position: fixed; inset: 0; z-index: 9999;
+  width: 100vw; height: 100vh; min-height: 100vh;
+  overflow-y: auto; overflow-x: hidden;
+  background: inherit;
+}
+
+/* Nav controls */
+#fullscreen-hint { display: none; position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(26,58,107,.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.2); border-radius: 20px; padding: 8px 20px; color: rgba(255,255,255,.7); font-size: .76rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; gap: 14px; align-items: center; z-index: 10000; }
+#fullscreen-exit { display: none; position: fixed; top: 16px; right: 16px; background: rgba(192,0,0,.85); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.3); border-radius: 8px; padding: 8px 16px; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #fff; cursor: pointer; z-index: 10000; transition: all var(--transition); }
+#fullscreen-exit:hover { background: var(--osbp-red); }
+#fs-prev, #fs-next { display: none; position: fixed; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.15); backdrop-filter: blur(8px); border: 2px solid rgba(255,255,255,.6); border-radius: 50%; width: 60px; height: 60px; color: #fff; font-size: 1.8rem; cursor: pointer; align-items: center; justify-content: center; z-index: 10000; transition: all var(--transition); font-weight: 700; box-shadow: 0 2px 12px rgba(0,0,0,.4); }
+#fs-prev:hover, #fs-next:hover { background: rgba(255,255,255,.3); border-color: #fff; }
+#fs-prev { left: 20px; }
+#fs-next { right: 20px; }
+body.fullscreen-mode #fs-prev, body.fullscreen-mode #fs-next { display: flex; }
+body.fullscreen-mode #fullscreen-exit { display: flex; }
+#slide-progress { display: none; position: fixed; bottom: 36px; left: 50%; transform: translateX(-50%); gap: 12px; z-index: 10000; }
+body.fullscreen-mode #slide-progress { display: flex; }
+.prog-dot { width: 14px; height: 14px; border-radius: 50%; background: rgba(255,255,255,.35); cursor: pointer; transition: all .2s; border: 2px solid rgba(255,255,255,.5); box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+.prog-dot.active { background: #F5CC00; transform: scale(1.3); border-color: #fff; box-shadow: 0 0 8px rgba(245,204,0,.5); }
+#slide-label { display: none; }
+body.fullscreen-mode #slide-label { display: block; position: fixed; bottom: 36px; left: 40px; font-size: .82rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.3); z-index: 10000; }
+
+/* ─── FULLSCREEN DECK NAV ────────────────────────────────── */
+#fs-deck-nav { display: none; position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 10000; background: linear-gradient(135deg, rgba(15,27,45,.95) 0%, rgba(23,55,94,.9) 100%); backdrop-filter: blur(24px); border: 1px solid rgba(245,204,0,.2); border-radius: 14px; padding: 5px 6px; gap: 4px; align-items: center; box-shadow: 0 8px 32px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.06) inset; }
+body.fullscreen-mode #fs-deck-nav { display: flex; }
+.fs-deck-btn { display: flex; align-items: center; gap: 7px; padding: 11px 22px; border-radius: 10px; border: 1px solid transparent; background: transparent; color: rgba(255,255,255,.65); font-family: var(--font-body); font-size: .92rem; font-weight: 600; cursor: pointer; transition: all .25s cubic-bezier(.4,0,.2,1); white-space: nowrap; letter-spacing: .02em; }
+.fs-deck-btn:hover { background: rgba(255,255,255,.1); color: #fff; border-color: rgba(255,255,255,.12); transform: translateY(-1px); }
+.fs-deck-btn.active { background: linear-gradient(135deg, rgba(245,204,0,.18) 0%, rgba(245,204,0,.08) 100%); border-color: rgba(245,204,0,.45); color: #F5CC00; font-weight: 700; box-shadow: 0 2px 12px rgba(245,204,0,.15); }
+.fs-deck-sep { width: 1px; height: 28px; background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,.15) 50%, transparent 100%); flex-shrink: 0; margin: 0 2px; }
+
+/* ─── ANNOTATION TOOLBAR ─────────────────────────────────── */
+#annotation-bar { display: none; position: fixed; bottom: 20px; right: 20px; left: auto; transform: none; background: rgba(12,20,32,.92); backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,.18); border-radius: 14px; padding: 6px 10px; z-index: 10001; align-items: center; gap: 0; transition: max-width .28s ease, max-height .28s ease, padding .18s ease; overflow: hidden; max-width: 46px; max-height: 46px; }
+body.fullscreen-mode #annotation-bar { display: flex; }
+#annotation-bar.ann-open { max-width: 1200px; max-height: 70px; padding: 6px 14px; }
+.ann-toggle-pill { width: 34px; height: 34px; border-radius: 9px; border: 1.5px solid rgba(245,204,0,.5); background: rgba(245,204,0,.08); color: #F5CC00; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: all .16s; }
+.ann-toggle-pill:hover { background: rgba(245,204,0,.18); border-color: #F5CC00; }
+.ann-expand-wrap { display: none; align-items: center; gap: 6px; margin-left: 8px; }
+#annotation-bar.ann-open .ann-expand-wrap { display: flex; }
+.ann-group { display: flex; gap: 3px; }
+.ann-sep { width: 1px; height: 24px; background: rgba(255,255,255,.12); margin: 0 6px; flex-shrink: 0; }
+.ann-btn { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 5px 8px; border-radius: 6px; border: 1px solid transparent; background: transparent; color: rgba(255,255,255,.7); font-size: .6rem; font-weight: 600; cursor: pointer; transition: all .14s; white-space: nowrap; }
+.ann-btn:hover { background: rgba(255,255,255,.1); color: #fff; }
+.ann-btn.active { background: rgba(245,204,0,.18); border-color: var(--sunrise-gold); color: #F5CC00; }
+.ann-btn span { font-size: .58rem; }
+.ann-colors { display: flex; gap: 4px; align-items: center; }
+.ann-color { width: 20px; height: 20px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: all .14s; }
+.ann-color.active { border-color: #fff; transform: scale(1.15); }
+.ann-size-wrap { display: flex; align-items: center; gap: 6px; }
+.ann-size-label { font-size: .6rem; font-weight: 700; color: rgba(255,255,255,.5); text-transform: uppercase; }
+.ann-size-slider { width: 80px; accent-color: var(--sunrise-gold); }
+.ann-size-num { font-size: .72rem; font-weight: 700; color: rgba(255,255,255,.7); min-width: 18px; }
+#ann-show-btn { display: none; position: fixed; bottom: 20px; right: 20px; width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid rgba(245,204,0,.5); background: rgba(12,20,32,.9); color: #F5CC00; font-size: 1rem; cursor: pointer; z-index: 10001; align-items: center; justify-content: center; }
+body.fullscreen-mode #ann-show-btn { display: flex; }
+#annotation-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 550; pointer-events: none; cursor: crosshair; }
+#annotation-canvas.active { pointer-events: auto; }
+#annotation-canvas.laser-mode { cursor: none; }
+
+/* ─── WELCOME MODAL ──────────────────────────────────────── */
+#welcome-backdrop { position: fixed; inset: 0; background: rgba(10,22,50,.72); backdrop-filter: blur(6px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; animation: wbFadeIn .4s ease both; }
+#welcome-backdrop.hiding { animation: wbFadeOut .3s ease forwards; }
+@keyframes wbFadeIn  { from { opacity:0; } to { opacity:1; } }
+@keyframes wbFadeOut { from { opacity:1; } to { opacity:0; } }
+#welcome-modal { background: var(--white); border-radius: 14px; box-shadow: 0 24px 80px rgba(10,22,50,.5); width: 100%; max-width: 620px; overflow: hidden; animation: wbSlideUp .42s cubic-bezier(.22,1,.36,1) both; }
+@keyframes wbSlideUp { from { opacity:0; transform: translateY(32px) scale(.97); } to { opacity:1; transform: translateY(0) scale(1); } }
+.wm-header { background: linear-gradient(135deg, var(--space-blue) 0%, var(--osbp-blue) 60%, var(--dod-blue) 100%); padding: 28px 32px 24px; position: relative; overflow: hidden; border-bottom: 4px solid var(--sunrise-gold); }
+.wm-header::before { content: ''; position: absolute; top: -30px; right: -30px; width: 180px; height: 180px; border-radius: 50%; background: rgba(53,94,147,.22); }
+.wm-logo { font-family: var(--font-display); font-size: .75rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.55); margin-bottom: 10px; position: relative; z-index: 1; }
+.wm-logo span { color: var(--sunrise-gold); }
+.wm-headline { font-family: var(--font-display); font-size: 1.85rem; font-weight: 700; color: #fff; line-height: 1.1; letter-spacing: .04em; text-transform: uppercase; position: relative; z-index: 1; text-shadow: 0 2px 12px rgba(0,0,0,.3); }
+.wm-tagline { color: rgba(255,255,255,.65); font-size: .88rem; font-weight: 300; margin-top: 6px; position: relative; z-index: 1; }
+.wm-body { padding: 24px 32px 28px; }
+.wm-quick-tips { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.wm-tip { background: var(--off-white); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; display: flex; align-items: flex-start; gap: 10px; }
+.wm-tip-icon { flex-shrink: 0; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+.wm-tip-icon.blue { background: var(--blue-bg); }
+.wm-tip-icon.red  { background: var(--red-bg); }
+.wm-tip-text strong { display: block; font-size: .82rem; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+.wm-tip-text span { font-size: .77rem; color: var(--ink2); line-height: 1.4; }
+.wm-footer { padding: 0 32px 28px; display: flex; gap: 10px; justify-content: flex-end; align-items: center; }
+.wm-dont-show { display: flex; align-items: center; gap: 6px; font-size: .77rem; color: var(--ink2); cursor: pointer; margin-right: auto; }
+.wm-dont-show input { accent-color: var(--blue-mid); cursor: pointer; }
+.wm-btn-primary { padding: 10px 26px; border: none; border-radius: 7px; background: linear-gradient(135deg, var(--space-blue) 0%, var(--dod-blue) 100%); color: #fff; font-family: var(--font-body); font-size: .88rem; font-weight: 700; cursor: pointer; letter-spacing: .06em; text-transform: uppercase; box-shadow: 0 4px 14px rgba(21,38,59,.35); transition: all var(--transition); }
+.wm-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(21,38,59,.45); opacity: .9; }
+.wm-btn-secondary { padding: 9px 18px; border: 1.5px solid var(--border); border-radius: 7px; background: none; font-family: var(--font-body); font-size: .85rem; font-weight: 700; color: var(--ink2); cursor: pointer; transition: all var(--transition); }
+.wm-btn-secondary:hover { border-color: var(--blue-lt); color: var(--blue-mid); }
+.kbd { display: inline-block; background: var(--cream); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; font-size: .74rem; font-weight: 700; color: var(--ink); font-family: 'Courier New', monospace; }
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 800px) {
+  .syn-cards { grid-template-columns: 1fr; }
+  .syn-header h1 { font-size: 2rem; }
+  .wm-quick-tips { grid-template-columns: 1fr; }
+  .tl-era-wrap { flex-direction: column; }
+  .tl-ticks { flex-wrap: wrap; gap: 4px; }
+}
+
+.hd-link { display:inline-flex; align-items:center; gap:5px; margin-top:8px; padding:4px 12px; font-family:'Lato',sans-serif; font-size:.75rem; font-weight:600; color:#3a6a8a; text-decoration:none; border:1px solid rgba(58,106,138,.25); border-radius:6px; transition:all .2s; letter-spacing:.04em; }
+.hd-link:hover { background:rgba(58,106,138,.08); border-color:rgba(58,106,138,.45); color:#1a3a5c; }
+.hd-link svg { width:14px; height:14px; fill:currentColor; }
+
+/* ─── COMPACT TIMELINE (fit on one screen) ─── */
+.tl-wrap { margin-top: 12px; }
+.tl-era-wrap { padding: 20px; gap: 24px; min-height: auto; margin-bottom: 12px; }
+.tl-era-left { flex: 0 0 220px; gap: 8px; }
+.tl-era-img { height: 130px; }
+.tl-era-title { font-size: 1.4rem; }
+.tl-badge { padding: 6px 10px; min-width: 80px; }
+.tl-badge-label { font-size: .7rem; }
+.tl-badge-value { font-size: .9rem; margin-top: 2px; }
+.tl-cost-overlay { padding: 5px 10px; font-size: .85rem; margin-top: 6px; }
+.tl-youarehere { padding: 6px 12px; font-size: .85rem; margin-top: 6px; }
+.tl-era-text { font-size: 1rem; line-height: 1.5; margin-bottom: 10px; }
+.tl-bar-wrap { margin-top: 8px; }
+.tl-effort-bar { margin-top: 10px; }
+.tl-effort-fill { height: 24px; font-size: .78rem; }
+.tl-ticks { margin-bottom: 8px; }
+.tl-tick { padding: 8px 6px; font-size: .9rem; }
+.tl-slider-row { margin-top: 2px; }
+
+/* ─── COMPACT VIDEO BOX ─── */
+.syn-video-box { padding: 14px; }
+.syn-video-box h3 { font-size: .95rem; margin-bottom: 10px; }
+</style>
+</head>
+<body class="active-deck-snagit">
+
+<!-- ═══ TOPBAR ═══════════════════════════════════════════ -->
+<div id="topbar" role="navigation">
+  <div class="brand" onclick="closeWelcome()">OSBP<span>Deck</span></div>
+  <div class="tb-sep"></div>
+
+  <!-- Deck Dropdown -->
+  <div class="tb-dd-wrap" id="dd-deck">
+    <button class="tb-dd-btn tb-dd-gold" aria-haspopup="true" aria-expanded="false">
+      <span class="tb-dd-muted">Deck</span> <span id="dd-deck-label">SnagIt Value</span>
+      <svg class="tb-caret" width="8" height="5" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+    </button>
+    <div class="tb-dd-menu">
+      <button class="tb-dd-item tb-dd-active" data-deck="snagit">&#x1F4CB; SnagIt Value</button>
+      <button class="tb-dd-item" data-deck="videoprod">&#x1F3AC; Video Development Journey</button>
+      <button class="tb-dd-item" data-deck="synthesia">&#x1F916; AI Video with Synthesia</button>
+    </div>
+  </div>
+
+  <!-- Slides Dropdown -->
+  <div class="tb-dd-wrap" id="dd-slides">
+    <button class="tb-dd-btn" aria-haspopup="true" aria-expanded="false">
+      <span class="tb-dd-muted">Slides</span> <span id="dd-slides-label">Video Demo</span>
+      <svg class="tb-caret" width="8" height="5" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+    </button>
+    <div class="tb-dd-menu" id="dd-slides-menu"></div>
+  </div>
+
+  <div class="tb-spacer"></div>
+
+  <button class="tb-btn" id="btn-fullscreen">&#x26F6; Present</button>
+
+  <!-- Admin Dropdown -->
+  <div class="tb-dd-wrap" id="dd-admin">
+    <button class="tb-dd-btn" aria-haspopup="true" aria-expanded="false">
+      Admin <svg class="tb-caret" width="8" height="5" viewBox="0 0 8 5"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+    </button>
+    <div class="tb-dd-menu tb-dd-right">
+      <button class="tb-dd-item" id="btn-export">&#x2B07; Export HTML</button>
+      <button class="tb-dd-item" id="btn-help">&#x2753; Help</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DECK 1: SNAGIT VALUE ═════════════════════════════ -->
+<div id="deck-snagit" role="main">
+<div class="syn-canvas">
+  <div class="syn-header">
+    <h1>Why We Need SnagIt</h1>
+    <div class="subtitle">Quick comparison for documentation &amp; training efficiency</div>
+  </div>
+  <div class="syn-tabs" id="snagit-tabs">
+    <button class="syn-tab active" data-syn="snagit-demo">&#x1F3AC; Video Demo</button>
+    <button class="syn-tab" data-syn="snagit-impact">&#x1F4CA; Impact</button>
+    <button class="syn-tab" data-syn="snagit-roi">&#x1F4B0; ROI</button>
+    <button class="syn-tab" data-syn="snagit-guide">&#x1F4D6; Guide</button>
+  </div>
+
+  <!-- VIDEO DEMO -->
+  <div class="syn-section active" id="syn-snagit-demo">
+    <div class="syn-section-header"><span class="syn-section-title">SnagIt Demo</span></div>
+    <div class="syn-video-single syn-reveal-item" data-syn-order="1">
+      <video controls preload="auto" poster="poster-snagit.jpg" style="width:100%;border-radius:8px;">
+        <source src="SnagIt Demo.mp4" type="video/mp4">
+      </video>
+      <p class="syn-video-placeholder">SnagIt screen capture demo &mdash; 3 min overview</p>
+      <a class="hd-link" href="SnagIt Demo.mp4" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>Watch in HD</a>
+    </div>
+  </div>
+
+  <!-- IMPACT -->
+  <div class="syn-section" id="syn-snagit-impact">
+    <div class="syn-section-header"><span class="syn-section-title">The Shift</span></div>
+    <div class="syn-cards">
+      <div class="syn-card syn-reveal-item" data-syn-order="1">
+        <div class="syn-card-title">Current Workflow</div>
+        <ul>
+          <li class="syn-reveal-bullet" data-syn-order="2"><strong>Print Screen + Paint</strong> for basic captures</li>
+          <li class="syn-reveal-bullet" data-syn-order="3"><strong>Manual cropping</strong> in Word or PowerPoint</li>
+          <li class="syn-reveal-bullet" data-syn-order="4"><strong>No PII redaction</strong> &mdash; no way to blur sensitive data (names, SSNs, emails) before sharing</li>
+          <li class="syn-reveal-bullet" data-syn-order="5"><strong>Inconsistent annotations</strong> across creators</li>
+          <li class="syn-reveal-bullet" data-syn-order="6"><strong>3&ndash;4 tools</strong> per workflow (capture, edit, annotate, insert)</li>
+        </ul>
+      </div>
+      <div class="syn-card syn-reveal-item" data-syn-order="7">
+        <div class="syn-card-title">With SnagIt</div>
+        <ul>
+          <li class="syn-reveal-bullet" data-syn-order="8"><strong>One-click capture</strong> &mdash; screen, window, or region</li>
+          <li class="syn-reveal-bullet" data-syn-order="9"><strong>Built-in annotations</strong> &mdash; stamps, callouts, arrows</li>
+          <li class="syn-reveal-bullet" data-syn-order="10"><strong>One-click PII redaction</strong> &mdash; instantly blur names, SSNs, emails &amp; sensitive data before sharing</li>
+          <li class="syn-reveal-bullet" data-syn-order="11"><strong>Templates</strong> enforce consistency across all creators</li>
+          <li class="syn-reveal-bullet" data-syn-order="12"><strong>1 tool</strong> replaces entire workflow</li>
+        </ul>
+      </div>
+    </div>
+    <div class="syn-cards" style="margin-top: 24px;">
+      <div class="syn-card syn-reveal-item" data-syn-order="13">
+        <div class="syn-card-title">Before</div>
+        <div class="syn-stats">
+          <div class="syn-stat"><div class="syn-stat-value">6&ndash;10 min</div><div class="syn-stat-label">Per screenshot</div></div>
+          <div class="syn-stat"><div class="syn-stat-value">3&ndash;4 tools</div><div class="syn-stat-label">Per workflow</div></div>
+          <div class="syn-stat"><div class="syn-stat-value">High</div><div class="syn-stat-label">Rework rate</div></div>
+          <div class="syn-stat"><div class="syn-stat-value">Low</div><div class="syn-stat-label">Consistency</div></div>
+        </div>
+      </div>
+      <div class="syn-card syn-reveal-item" data-syn-order="14">
+        <div class="syn-card-title">After</div>
+        <div class="syn-stats">
+          <div class="syn-stat"><div class="syn-stat-value">2&ndash;3 min</div><div class="syn-stat-label">Per screenshot</div></div>
+          <div class="syn-stat"><div class="syn-stat-value">1 tool</div><div class="syn-stat-label">Entire workflow</div></div>
+          <div class="syn-stat"><div class="syn-stat-value">High</div><div class="syn-stat-label">Consistency</div></div>
+          <div class="syn-stat"><div class="syn-stat-value">Fast</div><div class="syn-stat-label">Updates</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROI -->
+  <div class="syn-section" id="syn-snagit-roi">
+    <div class="syn-section-header"><span class="syn-section-title">Return on Investment</span></div>
+    <div class="syn-cards">
+      <div class="syn-card syn-reveal-item" data-syn-order="1">
+        <div class="syn-card-title">Estimated Savings</div>
+        <ul>
+          <li class="syn-reveal-bullet" data-syn-order="2"><strong>5+ minutes saved per capture</strong> (8 min &rarr; 3 min)</li>
+          <li class="syn-reveal-bullet" data-syn-order="3">20 captures/week &times; 5 min = <strong>100 min saved/week</strong></li>
+          <li class="syn-reveal-bullet" data-syn-order="4">Team of 5 &rarr; <strong>~8 hours saved per week</strong></li>
+          <li class="syn-reveal-bullet" data-syn-order="5">Eliminates manual blur workarounds &amp; multi-tool juggling</li>
+          <li class="syn-reveal-bullet" data-syn-order="6">Break-even in <strong>under 1 day</strong> of use</li>
+        </ul>
+      </div>
+      <div class="syn-card syn-reveal-item" data-syn-order="7">
+        <div class="syn-card-title">Quality Gains</div>
+        <ul>
+          <li class="syn-reveal-bullet" data-syn-order="8"><strong>Professional annotations</strong> replace ad-hoc markups</li>
+          <li class="syn-reveal-bullet" data-syn-order="9"><strong>Standardized templates</strong> &mdash; uniform look across team</li>
+          <li class="syn-reveal-bullet" data-syn-order="10"><strong>Instant updates</strong> &mdash; re-capture &amp; re-annotate quickly</li>
+          <li class="syn-reveal-bullet" data-syn-order="11"><strong>PII protection</strong> &mdash; blur tool ensures HIPAA/PII compliance before distribution</li>
+          <li class="syn-reveal-bullet" data-syn-order="12"><strong>Faster reviews</strong> &mdash; clear visuals reduce back-and-forth</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUIDE (PDF) -->
+  <div class="syn-section" id="syn-snagit-guide">
+    <div class="syn-section-header"><span class="syn-section-title">Quick Reference Guide</span></div>
+    <div class="syn-card syn-reveal-item" data-syn-order="1">
+      <h3 style="font-size:1.2rem;font-weight:700;color:#15263B;margin-bottom:4px;">Placeholder SnagIt</h3>
+      <div class="pdf-viewer-wrap">
+        <iframe src="snagit-guide.pdf" class="pdf-viewer" title="SnagIt Guide PDF"></iframe>
+      </div>
+      <a href="snagit-guide.pdf" download class="pdf-download-btn syn-reveal-item" data-syn-order="2">&#x1F4E5; Download PDF Guide</a>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══ DECK 2: VIDEO DEVELOPMENT JOURNEY ════════════════ -->
+<div id="deck-videoprod" role="main">
+<div class="syn-canvas">
+  <div class="syn-header">
+    <h1>Video Development Journey</h1>
+    <div class="subtitle">From concept to delivery &mdash; understanding the evolution of video production</div>
+  </div>
+  <div class="syn-tabs" id="videoprod-tabs">
+    <button class="syn-tab active" data-syn="vp-phases">&#x1F3AC; Traditional Production</button>
+    <button class="syn-tab" data-syn="vp-evolution">&#x23F3; The Evolution</button>
+    <button class="syn-tab" data-syn="vp-compare">&#x2696; Compare</button>
+  </div>
+
+  <!-- TRADITIONAL PRODUCTION -->
+  <div class="syn-section active" id="syn-vp-phases">
+    <div class="syn-section-header"><span class="syn-section-title">Three-Phase Breakdown</span></div>
+    <div class="syn-cards" style="grid-template-columns: repeat(3, 1fr);">
+      <!-- Pre-Production -->
+      <div class="syn-card syn-reveal-item" data-syn-order="1" style="border-top: 3px solid var(--dod-blue);">
+        <div class="syn-card-title">&#x1F4DD; Pre-Production</div>
+        <div style="font-size:.78rem;color:var(--cadet-blue);font-weight:700;margin-bottom:8px;">~30% of total effort</div>
+        <ul>
+          <li class="syn-reveal-bullet" data-syn-order="2"><strong>Scriptwriting</strong> &amp; storyboarding</li>
+          <li class="syn-reveal-bullet" data-syn-order="3"><strong>Location scouting</strong> &amp; talent booking</li>
+          <li class="syn-reveal-bullet" data-syn-order="4"><strong>Equipment planning</strong> &amp; scheduling</li>
+          <li class="syn-reveal-bullet" data-syn-order="5"><strong>Stakeholder reviews</strong> &amp; approvals</li>
+        </ul>
+      </div>
+      <!-- Production -->
+      <div class="syn-card syn-reveal-item" data-syn-order="6" style="border-top: 3px solid var(--flame-red);">
+        <div class="syn-card-title">&#x1F3A5; Production</div>
+        <div style="font-size:.78rem;color:var(--cadet-blue);font-weight:700;margin-bottom:8px;">~25% of total effort</div>
+        <ul>
+          <li class="syn-reveal-bullet" data-syn-order="7"><strong>On-site filming</strong> with crew</li>
+          <li class="syn-reveal-bullet" data-syn-order="8"><strong>Lighting &amp; audio</strong> setup</li>
+          <li class="syn-reveal-bullet" data-syn-order="9"><strong>Multiple takes</strong> &amp; B-roll capture</li>
+          <li class="syn-reveal-bullet" data-syn-order="10"><strong>Director oversight</strong> on every scene</li>
+        </ul>
+      </div>
+      <!-- Post-Production -->
+      <div class="syn-card syn-reveal-item" data-syn-order="11" style="border-top: 3px solid var(--green);">
+        <div class="syn-card-title">&#x2702; Post-Production</div>
+        <div style="font-size:.78rem;color:var(--cadet-blue);font-weight:700;margin-bottom:8px;">~45% of total effort</div>
+        <ul>
+          <li class="syn-reveal-bullet" data-syn-order="12"><strong>Video editing</strong> &amp; color grading</li>
+          <li class="syn-reveal-bullet" data-syn-order="13"><strong>Sound mixing</strong> &amp; music licensing</li>
+          <li class="syn-reveal-bullet" data-syn-order="14"><strong>Graphics &amp; captions</strong></li>
+          <li class="syn-reveal-bullet" data-syn-order="15"><strong>Review cycles</strong> &amp; final render</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE EVOLUTION (Timeline) -->
+  <div class="syn-section" id="syn-vp-evolution">
+    <div class="syn-section-header"><span class="syn-section-title">Video Production Timeline: 2001 &rarr; Today</span></div>
+    <div class="syn-card syn-reveal-item" data-syn-order="1">
+      <div class="tl-wrap">
+        <!-- Era content block -->
+        <div class="tl-era-wrap" id="tl-era-wrap">
+          <div class="tl-era-left">
+            <div class="tl-era-img" id="tl-era-img"><span>&#x1F4FC;</span></div>
+            <div class="tl-era-title" id="tl-era-title">Around 2001</div>
+            <div class="tl-badges">
+              <div class="tl-badge"><div class="tl-badge-label">Turnaround</div><div class="tl-badge-value" id="tl-turnaround">Weeks to months</div></div>
+              <div class="tl-badge"><div class="tl-badge-label">Effort / 1-min</div><div class="tl-badge-value" id="tl-effort">~40&ndash;80 hrs</div></div>
+            </div>
+            <div class="tl-cost-overlay" id="tl-cost">&#x1F4B0; ~$2,000/min</div>
+            <div class="tl-youarehere" id="tl-youarehere">&#x1F4CD; Most DoD teams are here</div>
+          </div>
+          <div class="tl-era-right">
+            <p class="tl-era-text" id="tl-era-text">Tape-based cameras, linear editing suites, physical media distribution. Every change meant re-recording entire segments.</p>
+            <div class="tl-bar-wrap">
+              <div class="tl-bar-track"><div class="tl-bar-fill" id="tl-bar-fill" style="width:90%"></div></div>
+              <div class="tl-bar-legend"><span>Hours</span><span>Days</span><span>Weeks</span><span>Months</span></div>
+            </div>
+            <div class="tl-effort-bar" id="tl-effort-bar">
+              <div class="tl-effort-label">Effort per 1-min video</div>
+              <div class="tl-effort-track">
+                <div class="tl-effort-fill" id="tl-effort-fill" style="width:100%">80 hrs</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Year ticks -->
+        <div class="tl-ticks" id="tl-ticks">
+          <button class="tl-tick active" data-year="2001">2001</button>
+          <button class="tl-tick" data-year="2006">2006</button>
+          <button class="tl-tick" data-year="2011">2011</button>
+          <button class="tl-tick" data-year="2016">2016</button>
+          <button class="tl-tick" data-year="2021">2021</button>
+          <button class="tl-tick" data-year="2026">Today</button>
+        </div>
+
+        <!-- Slider -->
+        <div class="tl-slider-row">
+          <div class="tl-year-badge" id="tl-year-badge">2001</div>
+          <input class="tl-slider" id="tl-slider" type="range" min="2001" max="2026" step="5" value="2001"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARE -->
+  <div class="syn-section" id="syn-vp-compare">
+    <div class="syn-section-header"><span class="syn-section-title">Traditional vs. AI-Powered</span></div>
+    <div class="syn-card syn-reveal-item" data-syn-order="1">
+      <table class="syn-compare">
+        <thead><tr><th>Aspect</th><th>Traditional Video</th><th>AI-Powered (Synthesia)</th></tr></thead>
+        <tbody>
+          <tr class="syn-reveal-item" data-syn-order="2"><td class="aspect">Production Time</td><td class="bad">4&ndash;8 weeks per video</td><td class="good">Minutes to hours</td></tr>
+          <tr class="syn-reveal-item" data-syn-order="3"><td class="aspect">Cost per Minute</td><td class="bad">$1,000&ndash;$5,000+</td><td class="good">$15&ndash;$50</td></tr>
+          <tr class="syn-reveal-item" data-syn-order="4"><td class="aspect">Equipment</td><td class="bad">Camera, lights, mics, studio</td><td class="good">Browser only</td></tr>
+          <tr class="syn-reveal-item" data-syn-order="5"><td class="aspect">Talent</td><td class="bad">Hire actors/presenters</td><td class="good">AI avatars (130+ languages)</td></tr>
+          <tr class="syn-reveal-item" data-syn-order="6"><td class="aspect">Updates</td><td class="bad">Re-shoot &amp; re-edit</td><td class="good">Edit script &rarr; re-render</td></tr>
+          <tr class="syn-reveal-item" data-syn-order="7"><td class="aspect">Localization</td><td class="bad">Hire translators + re-record</td><td class="good">Toggle language &rarr; done</td></tr>
+          <tr class="syn-reveal-item" data-syn-order="8"><td class="aspect">Consistency</td><td class="bad">Varies by crew/take</td><td class="good">Brand templates enforced</td></tr>
+          <tr class="syn-reveal-item" data-syn-order="9"><td class="aspect">Scalability</td><td class="bad">Linear cost increase</td><td class="good">Near-zero marginal cost</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══ DECK 3: AI VIDEO WITH SYNTHESIA ══════════════════ -->
+<div id="deck-synthesia" role="main">
+<div class="syn-canvas">
+  <div class="syn-header">
+    <h1>Why We Need Synthesia</h1>
+    <div class="subtitle">Comparing our current video pipeline vs. AI-powered avatar video creation</div>
+  </div>
+  <div class="syn-tabs" id="synthesia-tabs">
+    <button class="syn-tab active" data-syn="syn-demo">&#x1F3AC; Video Demo</button>
+    <button class="syn-tab" data-syn="syn-impact">&#x1F4CA; Impact</button>
+    <button class="syn-tab" data-syn="syn-roi">&#x1F4B0; ROI</button>
+  </div>
+
+  <!-- VIDEO DEMO -->
+  <div class="syn-section active" id="syn-syn-demo">
+    <div class="syn-section-header"><span class="syn-section-title">Video Comparison</span></div>
+    <div class="syn-video-grid syn-reveal-item" data-syn-order="1">
+      <div class="syn-video-box">
+        <h3>Without Synthesia</h3>
+        <video controls preload="auto" poster="poster-without.jpg" style="width:100%;border-radius:8px;">
+          <source src="Without Synthesia Video.mp4" type="video/mp4">
+        </video>
+        <a class="hd-link" href="Without Synthesia Video.mp4" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>Watch in HD</a>
+      </div>
+      <div class="syn-video-box">
+        <h3>With Synthesia</h3>
+        <video controls preload="auto" poster="poster-synthesia.jpg" style="width:100%;border-radius:8px;">
+          <source src="Synthesia Video.mp4" type="video/mp4">
+        </video>
+        <a class="hd-link" href="Synthesia Video.mp4" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>Watch in HD</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPACT -->
+  <div class="syn-section" id="syn-syn-impact">
+    <div class="syn-section-header"><span class="syn-section-title">The Shift</span></div>
+    <div class="syn-cards">
+      <div class="syn-card syn-reveal-item" data-syn-order="1">
+        <div class="syn-card-title">Without Synthesia</div>
+        <ul>
+          <li class="syn-reveal-bullet" data-syn-order="2"><strong>PowerPoint</strong> for storyboard, layout &amp; animations</li>
+          <li class="syn-reveal-bullet" data-syn-order="3"><strong>Articulate Storyline</strong> for avatar builds</li>
+          <li class="syn-reveal-bullet" data-syn-order="4"><strong>Azure Text-to-Speech</strong> for voiceover generation</li>
+          <li class="syn-reveal-bullet" data-syn-order="5"><strong>Pixabay &amp; DVIDS</strong> for stock video sourcing</li>
+          <li class="syn-reveal-bullet" data-syn-order="6"><strong>Python + FFmpeg</strong> to stitch media, sync audio &amp; render</li>
+          <li class="syn-reveal-bullet" data-syn-order="7"><strong>Royalty-free instrumentals</strong> for background music</li>
+          <li class="syn-reveal-bullet" data-syn-order="8"><strong>Static photo avatar</strong> &mdash; no lip sync, feels unnatural</li>
+        </ul>
+      </div>
+      <div class="syn-card syn-reveal-item" data-syn-order="9">
+        <div class="syn-card-title">With Synthesia</div>
+        <ul>
+          <li class="syn-reveal-bullet" data-syn-order="10"><strong>One platform</strong> replaces 6 tools</li>
+          <li class="syn-reveal-bullet" data-syn-order="11"><strong>Type your script</strong> &rarr; AI avatar speaks with realistic lip sync</li>
+          <li class="syn-reveal-bullet" data-syn-order="12"><strong>130+ languages</strong> &mdash; toggle and re-render instantly</li>
+          <li class="syn-reveal-bullet" data-syn-order="13"><strong>Built-in media library</strong> + upload your own B-roll</li>
+          <li class="syn-reveal-bullet" data-syn-order="14"><strong>No coding required</strong> &mdash; browser-based, anyone can use it</li>
+          <li class="syn-reveal-bullet" data-syn-order="15"><strong>Edit &rarr; re-render in minutes</strong> &mdash; no full pipeline rebuild</li>
+          <li class="syn-reveal-bullet" data-syn-order="16"><strong>Brand templates</strong> enforce consistency across all videos</li>
+        </ul>
+      </div>
+    </div>
+    <div class="syn-cards" style="margin-top: 24px;">
+      <div class="syn-card syn-reveal-item" data-syn-order="17">
+        <div class="syn-card-title">Before</div>
+        <div class="syn-stats">
+          <div class="syn-stat"><div class="syn-stat-value">~90 min</div><div class="syn-stat-label">Per video</div></div>
+          <div class="syn-stat"><div class="syn-stat-value">6 tools</div><div class="syn-stat-label">Per workflow</div></div>
+          <div class="syn-stat"><div class="syn-stat-value">Static</div><div class="syn-stat-label">Avatar</div></div>
+          <div class="syn-stat"><div class="syn-stat-value">High</div><div class="syn-stat-label">Rework</div></div>
+        </div>
+      </div>
+      <div class="syn-card syn-reveal-item" data-syn-order="18">
+        <div class="syn-card-title">After</div>
+        <div class="syn-stats">
+          <div class="syn-stat"><div class="syn-stat-value">10&ndash;15 min</div><div class="syn-stat-label">Per video</div></div>
+          <div class="syn-stat"><div class="syn-stat-value">1 tool</div><div class="syn-stat-label">Entire workflow</div></div>
+          <div class="syn-stat"><div class="syn-stat-value">Lifelike</div><div class="syn-stat-label">Avatar</div></div>
+          <div class="syn-stat"><div class="syn-stat-value">Minutes</div><div class="syn-stat-label">To update</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROI -->
+  <div class="syn-section" id="syn-syn-roi">
+    <div class="syn-section-header"><span class="syn-section-title">Return on Investment</span></div>
+    <div class="syn-cards">
+      <div class="syn-card syn-reveal-item" data-syn-order="1">
+        <div class="syn-card-title">Estimated Savings</div>
+        <ul>
+          <li class="syn-reveal-bullet" data-syn-order="2"><strong>75 minutes saved per video</strong> (90 min &rarr; 15 min)</li>
+          <li class="syn-reveal-bullet" data-syn-order="3">3 videos/week &times; 75 min = <strong>3.75 hours saved/week</strong> per creator</li>
+          <li class="syn-reveal-bullet" data-syn-order="4">Team of 3 creators &rarr; <strong>~11 hours saved per week</strong></li>
+          <li class="syn-reveal-bullet" data-syn-order="5">Eliminates Python/FFmpeg maintenance &amp; debugging time</li>
+          <li class="syn-reveal-bullet" data-syn-order="6">No more Azure TTS configuration or audio sync issues</li>
+        </ul>
+      </div>
+      <div class="syn-card syn-reveal-item" data-syn-order="7">
+        <div class="syn-card-title">Quality &amp; Impact Gains</div>
+        <ul>
+          <li class="syn-reveal-bullet" data-syn-order="8"><strong>Professional AI avatars</strong> with natural lip sync replace static photos</li>
+          <li class="syn-reveal-bullet" data-syn-order="9"><strong>Multilingual</strong> &mdash; same video in 130+ languages without re-recording</li>
+          <li class="syn-reveal-bullet" data-syn-order="10"><strong>Instant updates</strong> &mdash; policy changes reflected in minutes, not hours</li>
+          <li class="syn-reveal-bullet" data-syn-order="11"><strong>Brand consistency</strong> &mdash; templates ensure uniform look across all videos</li>
+          <li class="syn-reveal-bullet" data-syn-order="12"><strong>Faster stakeholder reviews</strong> &mdash; rapid iteration on script changes</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══ ANNOTATION TOOLBAR ═══════════════════════════════ -->
+<div id="annotation-bar" role="toolbar" aria-label="Annotation tools">
+  <button id="ann-toggle-open" class="ann-toggle-pill" title="Open / close annotation tools (T)">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9.5 1.5l3 3L4 14H1v-3L9.5 1.5z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M7.5 3.5l3 3" stroke="currentColor" stroke-width="1.6"/></svg>
+  </button>
+  <div class="ann-expand-wrap">
+    <div class="ann-sep"></div>
+    <div class="ann-group">
+      <button class="ann-btn" id="ann-pen" data-tool="pen" title="Pen (P)"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9.5 1.5l3 3L4 14H1v-3L9.5 1.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg><span>Pen</span></button>
+      <button class="ann-btn" id="ann-hl" data-tool="highlight" title="Highlighter (H)"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.4" fill="rgba(245,204,0,.3)"/></svg><span>HL</span></button>
+      <button class="ann-btn" id="ann-arrow" data-tool="arrow" title="Arrow (A)"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H6M12 2v6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Arrow</span></button>
+      <button class="ann-btn" id="ann-laser" data-tool="laser" title="Laser (L)"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1.4"/><circle cx="7" cy="7" r="1" fill="currentColor"/></svg><span>Laser</span></button>
+    </div>
+    <div class="ann-sep"></div>
+    <div class="ann-group ann-colors" id="ann-colors">
+      <button class="ann-color active" data-color="#E3343B" style="background:#E3343B" title="Red"></button>
+      <button class="ann-color" data-color="#F5CC00" style="background:#F5CC00" title="Yellow"></button>
+      <button class="ann-color" data-color="#17375E" style="background:#17375E" title="Blue"></button>
+      <button class="ann-color" data-color="#1a7a4a" style="background:#1a7a4a" title="Green"></button>
+      <button class="ann-color" data-color="#ffffff" style="background:#fff;border:1px solid #999" title="White"></button>
+    </div>
+    <div class="ann-sep"></div>
+    <div class="ann-group">
+      <button class="ann-btn" id="ann-erase" data-tool="erase" title="Eraser (E)"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11l8-8M7 3l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M2 12h10" stroke="currentColor" stroke-width="1.4"/></svg><span>Erase</span></button>
+      <button class="ann-btn" id="ann-undo" title="Undo (Z)"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5h6a3 3 0 010 6H7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M5 3L3 5l2 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Undo</span></button>
+      <button class="ann-btn" id="ann-clear" title="Clear (C)"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span>Clear</span></button>
+    </div>
+    <div class="ann-sep"></div>
+    <div class="ann-group">
+      <div class="ann-size-wrap">
+        <span class="ann-size-label">Size</span>
+        <input type="range" id="ann-size" min="1" max="40" value="4" class="ann-size-slider"/>
+        <span id="ann-size-val" class="ann-size-num">4</span>
+      </div>
+    </div>
+  </div>
+</div>
+<button id="ann-show-btn" title="Show annotation tools (T)">&#x270F;</button>
+<canvas id="annotation-canvas" aria-hidden="true"></canvas>
+
+<!-- ═══ SLIDE LABEL ══════════════════════════════════════ -->
+<div id="slide-label">OSBPDeck &middot; SnagIt Value</div>
+
+<!-- ═══ WELCOME MODAL ════════════════════════════════════ -->
+<div id="welcome-backdrop">
+  <div id="welcome-modal" role="dialog" aria-modal="true">
+    <div class="wm-header">
+      <div class="wm-logo">OSBP<span>Deck</span> &middot; Unified Presentation</div>
+      <div class="wm-headline">SnagIt &bull; Video Production &bull; Synthesia</div>
+      <div class="wm-tagline">Three decks for making the case to OSBP leadership &mdash; no install required</div>
+    </div>
+    <div class="wm-body">
+      <div class="wm-quick-tips">
+        <div class="wm-tip"><div class="wm-tip-icon blue">&#x26F6;</div><div class="wm-tip-text"><strong>Present Mode</strong><span>Press <span class="kbd">F</span> for fullscreen, Zoom-ready view</span></div></div>
+        <div class="wm-tip"><div class="wm-tip-icon red">&#x1F58B;</div><div class="wm-tip-text"><strong>Annotate</strong><span>Press <span class="kbd">T</span> in present mode for pen, highlighter &amp; laser</span></div></div>
+        <div class="wm-tip"><div class="wm-tip-icon blue">&#x1F4CB;</div><div class="wm-tip-text"><strong>3 Decks</strong><span>Switch between SnagIt, Video Production, and Synthesia</span></div></div>
+        <div class="wm-tip"><div class="wm-tip-icon red">&#x2B07;</div><div class="wm-tip-text"><strong>Export</strong><span>Admin &rarr; Export HTML for offline sharing</span></div></div>
+      </div>
+    </div>
+    <div class="wm-footer">
+      <label class="wm-dont-show"><input type="checkbox" id="wm-skip-check" /> Don't show again</label>
+      <button class="wm-btn-secondary" id="wm-present-btn">&#x26F6; Present</button>
+      <button class="wm-btn-primary" id="wm-start-btn">Get Started &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FULLSCREEN CONTROLS ══════════════════════════════ -->
+<div id="fs-deck-nav">
+  <button class="fs-deck-btn active" data-deck="snagit">&#x1F4CB; SnagIt</button>
+  <div class="fs-deck-sep"></div>
+  <button class="fs-deck-btn" data-deck="videoprod">&#x1F3AC; Video Journey</button>
+  <div class="fs-deck-sep"></div>
+  <button class="fs-deck-btn" data-deck="synthesia">&#x1F916; Synthesia</button>
+</div>
+<button id="fs-prev">&#x2039;</button>
+<button id="fs-next">&#x203A;</button>
+<div id="slide-progress"></div>
+<div id="fullscreen-hint">Click to reveal &middot; Double-click show all &middot; Arrow keys navigate &middot; <span class="kbd">T</span> annotate &middot; <span class="kbd">ESC</span> exit</div>
+<button id="fullscreen-exit">&#x2715; Exit</button>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   UNIFIED OSBP DECK ENGINE
+   3 Decks — All Synthesia-style reveal animations
+   ═══════════════════════════════════════════════════════════ */
+
+// ─── DECK CONFIG ──────────────────────────────────────────
+const DECKS = {
+  snagit: {
+    label: 'SnagIt Value',
+    slideLabel: 'OSBPDeck \u00b7 SnagIt Value',
+    tabOrder: ['snagit-demo', 'snagit-impact', 'snagit-roi', 'snagit-guide'],
+    tabContainer: 'snagit-tabs'
+  },
+  videoprod: {
+    label: 'Video Development Journey',
+    slideLabel: 'OSBPDeck \u00b7 Video Production',
+    tabOrder: ['vp-phases', 'vp-evolution', 'vp-compare'],
+    tabContainer: 'videoprod-tabs'
+  },
+  synthesia: {
+    label: 'AI Video with Synthesia',
+    slideLabel: 'OSBPDeck \u00b7 Synthesia Value',
+    tabOrder: ['syn-demo', 'syn-impact', 'syn-roi'],
+    tabContainer: 'synthesia-tabs'
+  }
+};
+
+let activeDeck = 'snagit';
+let currentTab = 'snagit-demo';
+let fullscreen = false;
+let queue = [];
+let queueIndex = 0;
+
+// ─── DECK SWITCHING ───────────────────────────────────────
+function switchDeck(deck) {
+  activeDeck = deck;
+  document.body.className = 'active-deck-' + deck + (fullscreen ? ' fullscreen-mode' : '');
+  currentTab = DECKS[deck].tabOrder[0];
+  document.getElementById('slide-label').textContent = DECKS[deck].slideLabel;
+  document.getElementById('dd-deck-label').textContent = DECKS[deck].label;
+
+  // Update dropdown active states
+  document.querySelectorAll('#dd-deck .tb-dd-item').forEach(function(item) {
+    item.classList.toggle('tb-dd-active', item.dataset.deck === deck);
+  });
+
+  // Update fullscreen deck nav active states
+  document.querySelectorAll('#fs-deck-nav .fs-deck-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.deck === deck);
+  });
+
+  // Activate first tab of new deck
+  activateTab(currentTab);
+  renderDots();
+  renderSlidesDropdown();
+  closeDd();
+}
+
+// ─── TAB SWITCHING ────────────────────────────────────────
+function activateTab(tabId) {
+  var deck = DECKS[activeDeck];
+  var container = document.getElementById(deck.tabContainer);
+  if (!container) return;
+
+  // Deactivate all tabs and sections in this deck
+  container.querySelectorAll('.syn-tab').forEach(function(t) { t.classList.remove('active'); });
+  deck.tabOrder.forEach(function(id) {
+    var sec = document.getElementById('syn-' + id);
+    if (sec) { resetReveal(sec); sec.classList.remove('active'); }
+  });
+
+  // Activate target
+  var targetTab = container.querySelector('[data-syn="' + tabId + '"]');
+  if (targetTab) targetTab.classList.add('active');
+  var targetSec = document.getElementById('syn-' + tabId);
+  if (targetSec) targetSec.classList.add('active');
+
+  currentTab = tabId;
+  buildQueue();
+  renderDots();
+  updateSlidesLabel();
+}
+
+// ─── REVEAL ENGINE ────────────────────────────────────────
+function buildQueue() {
+  var section = document.getElementById('syn-' + currentTab);
+  if (!section) { queue = []; queueIndex = 0; return; }
+  var all = Array.from(section.querySelectorAll('[data-syn-order]'))
+    .sort(function(a, b) { return Number(a.dataset.synOrder) - Number(b.dataset.synOrder); });
+  queue = all;
+  queueIndex = 0;
+}
+
+function resetReveal(section) {
+  if (!section) return;
+  section.querySelectorAll('.syn-revealed').forEach(function(el) { el.classList.remove('syn-revealed'); });
+}
+
+function revealNext() {
+  if (queueIndex >= queue.length) return;
+  queue[queueIndex].classList.add('syn-revealed');
+  queueIndex++;
+}
+
+function revealAll() {
+  while (queueIndex < queue.length) {
+    queue[queueIndex].classList.add('syn-revealed');
+    queueIndex++;
+  }
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────
+function navBy(delta) {
+  var deck = DECKS[activeDeck];
+  var idx = deck.tabOrder.indexOf(currentTab);
+  var next = deck.tabOrder[idx + delta];
+  if (next) activateTab(next);
+}
+
+// ─── PROGRESS DOTS ────────────────────────────────────────
+function renderDots() {
+  var container = document.getElementById('slide-progress');
+  container.innerHTML = '';
+  var deck = DECKS[activeDeck];
+  deck.tabOrder.forEach(function(tab) {
+    var dot = document.createElement('div');
+    dot.className = 'prog-dot' + (tab === currentTab ? ' active' : '');
+    dot.addEventListener('click', function() { activateTab(tab); });
+    container.appendChild(dot);
+  });
+}
+
+// ─── SLIDES DROPDOWN ──────────────────────────────────────
+function renderSlidesDropdown() {
+  var menu = document.getElementById('dd-slides-menu');
+  menu.innerHTML = '';
+  var deck = DECKS[activeDeck];
+  deck.tabOrder.forEach(function(tab) {
+    var btn = document.createElement('button');
+    btn.className = 'tb-dd-item' + (tab === currentTab ? ' tb-dd-active' : '');
+    var tabEl = document.querySelector('[data-syn="' + tab + '"]');
+    btn.textContent = tabEl ? tabEl.textContent : tab;
+    btn.addEventListener('click', function() { activateTab(tab); closeDd(); });
+    menu.appendChild(btn);
+  });
+}
+
+function updateSlidesLabel() {
+  var tabEl = document.querySelector('[data-syn="' + currentTab + '"]');
+  if (tabEl) document.getElementById('dd-slides-label').textContent = tabEl.textContent.trim();
+}
+
+// ─── FULLSCREEN ───────────────────────────────────────────
+function enterFullscreen() {
+  fullscreen = true;
+  document.body.classList.add('fullscreen-mode');
+  document.getElementById('btn-fullscreen').classList.add('fullscreen-active');
+  var el = document.documentElement;
+  var req = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+  if (req) req.call(el).catch(function() {});
+}
+
+function exitFullscreen() {
+  fullscreen = false;
+  document.body.classList.remove('fullscreen-mode');
+  document.getElementById('btn-fullscreen').classList.remove('fullscreen-active');
+  if (document.fullscreenElement) document.exitFullscreen().catch(function() {});
+  else if (document.webkitFullscreenElement) document.webkitExitFullscreen();
+  // Clear annotations on exit
+  var c = document.getElementById('annotation-canvas');
+  if (c) { var ctx = c.getContext('2d'); if (ctx) ctx.clearRect(0, 0, c.width, c.height); }
+}
+
+document.addEventListener('fullscreenchange', function() {
+  if (!document.fullscreenElement && fullscreen) exitFullscreen();
+});
+
+// ─── KEYBOARD ─────────────────────────────────────────────
+document.addEventListener('keydown', function(e) {
+  if (e.target.matches('input, textarea, select, [contenteditable="true"]')) return;
+  if (e.key === 'f' || e.key === 'F') { e.preventDefault(); fullscreen ? exitFullscreen() : enterFullscreen(); }
+  if (e.key === 'Escape' && fullscreen) exitFullscreen();
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); navBy(1); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); navBy(-1); }
+  if (e.key === 'r' || e.key === 'R') revealAll();
+});
+
+// ─── CLICK-TO-REVEAL ─────────────────────────────────────
+document.querySelectorAll('.syn-canvas').forEach(function(canvas) {
+  var pendingClick = null;
+  canvas.addEventListener('mousedown', function(e) {
+    if (e.button !== 0) return;
+    if (e.target.closest('.syn-tab, .syn-tabs, video, button, a, input, .tl-tick, .tl-slider')) return;
+    if (pendingClick) { clearTimeout(pendingClick); pendingClick = null; }
+    pendingClick = setTimeout(function() { pendingClick = null; revealNext(); }, 220);
+  });
+  canvas.addEventListener('dblclick', function(e) {
+    if (e.target.closest('.syn-tab, .syn-tabs, video, button, a, input')) return;
+    if (pendingClick) { clearTimeout(pendingClick); pendingClick = null; }
+    revealAll();
+  });
+});
+
+// ─── BUTTON WIRING ────────────────────────────────────────
+document.getElementById('btn-fullscreen').addEventListener('click', function() { fullscreen ? exitFullscreen() : enterFullscreen(); });
+document.getElementById('fullscreen-exit').addEventListener('click', exitFullscreen);
+document.getElementById('fs-prev').addEventListener('click', function() { navBy(-1); });
+document.getElementById('fs-next').addEventListener('click', function() { navBy(1); });
+
+// Tab buttons wiring
+document.querySelectorAll('.syn-tab').forEach(function(tab) {
+  tab.addEventListener('click', function() { activateTab(tab.dataset.syn); });
+});
+
+// Deck dropdown items
+document.querySelectorAll('#dd-deck .tb-dd-item').forEach(function(item) {
+  item.addEventListener('click', function() { switchDeck(item.dataset.deck); });
+});
+
+// Fullscreen deck nav buttons
+document.querySelectorAll('#fs-deck-nav .fs-deck-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() { switchDeck(btn.dataset.deck); });
+});
+
+// ─── CUSTOM DROPDOWNS ─────────────────────────────────────
+function closeDd() {
+  document.querySelectorAll('.tb-dd-wrap.open').forEach(function(dd) { dd.classList.remove('open'); });
+}
+
+document.querySelectorAll('.tb-dd-wrap').forEach(function(wrap) {
+  var btn = wrap.querySelector('.tb-dd-btn');
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var isOpen = wrap.classList.contains('open');
+    closeDd();
+    if (!isOpen) wrap.classList.add('open');
+  });
+});
+
+document.addEventListener('click', closeDd);
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeDd(); });
+
+// ─── EXPORT HTML ──────────────────────────────────────────
+document.getElementById('btn-export').addEventListener('click', function() {
+  closeDd();
+  var blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'osbp-deck-export.html';
+  a.click();
+  setTimeout(function() { URL.revokeObjectURL(a.href); }, 3000);
+});
+
+// ─── WELCOME MODAL ────────────────────────────────────────
+function closeWelcome() {
+  var bd = document.getElementById('welcome-backdrop');
+  if (!bd || bd.style.display === 'none') return;
+  bd.classList.add('hiding');
+  setTimeout(function() { bd.style.display = 'none'; }, 300);
+  if (document.getElementById('wm-skip-check').checked) {
+    try { localStorage.setItem('osbp-deck-skip-welcome', '1'); } catch(e) {}
+  }
+}
+
+(function() {
+  try { if (localStorage.getItem('osbp-deck-skip-welcome') === '1') { document.getElementById('welcome-backdrop').style.display = 'none'; } } catch(e) {}
+})();
+
+document.getElementById('wm-start-btn').addEventListener('click', closeWelcome);
+document.getElementById('wm-present-btn').addEventListener('click', function() { enterFullscreen(); closeWelcome(); });
+document.getElementById('btn-help').addEventListener('click', function() {
+  closeDd();
+  var bd = document.getElementById('welcome-backdrop');
+  bd.style.display = 'flex';
+  bd.classList.remove('hiding');
+});
+
+// ─── ANNOTATION ENGINE ────────────────────────────────────
+(function() {
+  var bar = document.getElementById('annotation-bar');
+  var showBtn = document.getElementById('ann-show-btn');
+  var canvas = document.getElementById('annotation-canvas');
+  var ctx = canvas.getContext('2d');
+  var tool = 'mouse';
+  var color = '#E3343B';
+  var size = 4;
+  var drawing = false;
+  var paths = [];
+  var current = null;
+  var laserDot = null;
+
+  function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; redraw(); }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function setTool(t) {
+    tool = t;
+    document.querySelectorAll('#annotation-bar .ann-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset && b.dataset.tool === t);
+    });
+    canvas.classList.toggle('active', t !== 'mouse');
+    canvas.classList.toggle('laser-mode', t === 'laser');
+    if (t !== 'laser') hideLaser();
+  }
+
+  function toggleBar(forceOpen) {
+    var isOpen = bar.classList.contains('ann-open');
+    if (forceOpen === true || !isOpen) {
+      bar.classList.add('ann-open');
+      bar.classList.remove('ann-hidden');
+      showBtn.style.display = 'none';
+      if (tool === 'mouse') setTool('pen');
+    } else {
+      bar.classList.remove('ann-open');
+      bar.classList.add('ann-hidden');
+      showBtn.style.display = 'flex';
+      setTool('mouse');
+    }
+  }
+
+  document.getElementById('ann-toggle-open').addEventListener('click', function() { toggleBar(); });
+  showBtn.addEventListener('click', function() { toggleBar(true); });
+
+  // Tool buttons
+  document.querySelectorAll('#annotation-bar .ann-btn[data-tool]').forEach(function(btn) {
+    btn.addEventListener('click', function() { setTool(btn.dataset.tool); });
+  });
+
+  // Colors
+  document.querySelectorAll('.ann-color').forEach(function(swatch) {
+    swatch.addEventListener('click', function() {
+      color = swatch.dataset.color;
+      document.querySelectorAll('.ann-color').forEach(function(s) { s.classList.remove('active'); });
+      swatch.classList.add('active');
+    });
+  });
+
+  // Size
+  var sizeSlider = document.getElementById('ann-size');
+  sizeSlider.addEventListener('input', function() {
+    size = Number(sizeSlider.value);
+    document.getElementById('ann-size-val').textContent = size;
+  });
+
+  // Drawing
+  function redraw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    paths.forEach(drawPath);
+  }
+
+  function drawPath(p) {
+    if (p.pts.length < 2) return;
+    ctx.save();
+    if (p.tool === 'erase') { ctx.globalCompositeOperation = 'destination-out'; }
+    else if (p.tool === 'highlight') { ctx.globalAlpha = 0.35; }
+    ctx.strokeStyle = p.color;
+    ctx.lineWidth = p.size;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    if (p.tool === 'arrow') {
+      var s = p.pts[0], e = p.pts[p.pts.length - 1];
+      ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(e.x, e.y); ctx.stroke();
+      var angle = Math.atan2(e.y - s.y, e.x - s.x);
+      var hl = Math.max(12, p.size * 3);
+      ctx.beginPath();
+      ctx.moveTo(e.x, e.y);
+      ctx.lineTo(e.x - hl * Math.cos(angle - 0.4), e.y - hl * Math.sin(angle - 0.4));
+      ctx.moveTo(e.x, e.y);
+      ctx.lineTo(e.x - hl * Math.cos(angle + 0.4), e.y - hl * Math.sin(angle + 0.4));
+      ctx.stroke();
+    } else {
+      ctx.beginPath();
+      ctx.moveTo(p.pts[0].x, p.pts[0].y);
+      for (var i = 1; i < p.pts.length; i++) ctx.lineTo(p.pts[i].x, p.pts[i].y);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function showLaser(x, y) {
+    if (!laserDot) {
+      laserDot = document.createElement('div');
+      laserDot.style.cssText = 'position:fixed;width:12px;height:12px;border-radius:50%;background:red;box-shadow:0 0 16px 4px rgba(255,0,0,.6);pointer-events:none;z-index:10002;transition:none;';
+      document.body.appendChild(laserDot);
+    }
+    laserDot.style.left = (x - 6) + 'px';
+    laserDot.style.top = (y - 6) + 'px';
+    laserDot.style.display = 'block';
+  }
+  function hideLaser() { if (laserDot) laserDot.style.display = 'none'; }
+
+  canvas.addEventListener('pointerdown', function(e) {
+    if (tool === 'mouse') return;
+    if (tool === 'laser') { showLaser(e.clientX, e.clientY); return; }
+    drawing = true;
+    current = { tool: tool, color: color, size: size, pts: [{ x: e.clientX, y: e.clientY }] };
+  });
+
+  canvas.addEventListener('pointermove', function(e) {
+    if (tool === 'laser') { showLaser(e.clientX, e.clientY); return; }
+    if (!drawing || !current) return;
+    current.pts.push({ x: e.clientX, y: e.clientY });
+    redraw();
+    drawPath(current);
+  });
+
+  function endDraw() {
+    if (tool === 'laser') { hideLaser(); return; }
+    if (!drawing || !current) return;
+    drawing = false;
+    paths.push(current);
+    current = null;
+    redraw();
+  }
+  canvas.addEventListener('pointerup', endDraw);
+  canvas.addEventListener('pointerleave', endDraw);
+
+  // Undo / Clear
+  document.getElementById('ann-undo').addEventListener('click', function() { paths.pop(); redraw(); });
+  document.getElementById('ann-clear').addEventListener('click', function() { paths = []; redraw(); });
+
+  // Annotation keyboard shortcuts
+  document.addEventListener('keydown', function(e) {
+    if (!fullscreen) return;
+    if (e.target.matches('input, textarea, select')) return;
+    if (e.key === 'p' || e.key === 'P') { setTool('pen'); toggleBar(true); }
+    if (e.key === 'h' || e.key === 'H') { setTool('highlight'); toggleBar(true); }
+    if (e.key === 'a' || e.key === 'A') { setTool('arrow'); toggleBar(true); }
+    if (e.key === 'l' || e.key === 'L') { setTool('laser'); toggleBar(true); }
+    if (e.key === 'e' || e.key === 'E') { setTool('erase'); toggleBar(true); }
+    if ((e.key === 'c' || e.key === 'C') && !e.ctrlKey && !e.metaKey) { document.getElementById('ann-clear').click(); }
+    if ((e.key === 'z' || e.key === 'Z') && !e.ctrlKey && !e.metaKey) { document.getElementById('ann-undo').click(); }
+    if (e.key === 't' || e.key === 'T') { toggleBar(); }
+  });
+})();
+
+// ─── TIMELINE ENGINE ──────────────────────────────────────
+(function() {
+  var ERAS = {
+    2001: { illus: '\uD83D\uDCFC', img: 'era-2001.jpg', title: 'Around 2001', turnaround: 'Weeks to months', effort: '~40\u201380 hrs', cost: '~$2,000/min', text: 'Tape-based cameras, linear editing suites, physical media distribution. Every change meant re-recording entire segments.', fill: 90, effortPct: 100, effortLabel: '80 hrs', youAreHere: false },
+    2006: { illus: '\uD83D\uDCBF', img: 'era-2006.jpg', title: 'Around 2006', turnaround: 'Weeks', effort: '~30\u201360 hrs', cost: '~$1,200/min', text: 'Early tapeless workflows. Non-linear editing on desktop (Final Cut, Premiere). DVD/streaming distribution emerging.', fill: 72, effortPct: 75, effortLabel: '60 hrs', youAreHere: false },
+    2011: { illus: '\u2601\uFE0F', img: 'era-2011.jpg', title: 'Around 2011', turnaround: '1\u20132 weeks', effort: '~20\u201345 hrs', cost: '~$800/min', text: 'Cloud-based review tools. HD as standard. YouTube as distribution. Stock footage libraries growing.', fill: 58, effortPct: 56, effortLabel: '45 hrs', youAreHere: false },
+    2016: { illus: '\uD83C\uDFA5', img: 'era-2016.jpg', title: 'Around 2016', turnaround: 'Days to 1 week', effort: '~12\u201325 hrs', cost: '~$500/min', text: '4K cameras affordable. Drones, gimbals, mobile editing. Remote collaboration becoming possible.', fill: 40, effortPct: 31, effortLabel: '25 hrs', youAreHere: true },
+    2021: { illus: '\uD83E\uDD16', img: 'era-2021.jpg', title: 'Around 2021', turnaround: 'Days', effort: '~8\u201318 hrs', cost: '~$200/min', text: 'Remote capture workflows. AI captions, auto-transcription, virtual backgrounds. Hybrid teams standard.', fill: 26, effortPct: 22, effortLabel: '18 hrs', youAreHere: true },
+    2026: { illus: '\u2728', img: 'era-2026.jpg', title: 'Today (2026)', turnaround: 'Minutes to hours', effort: '~1\u20134 hrs', cost: '~$15/min', text: 'AI-powered video generation (Synthesia, Descript, HeyGen). Type a script, get a polished video. 130+ languages. Near-zero marginal cost.', fill: 10, effortPct: 5, effortLabel: '2 hrs', youAreHere: false }
+  };
+
+  var years = [2001, 2006, 2011, 2016, 2021, 2026];
+
+  function nearest(v) {
+    var best = 2001, d = 999;
+    years.forEach(function(y) { if (Math.abs(y - v) < d) { d = Math.abs(y - v); best = y; } });
+    return best;
+  }
+
+  function render(year) {
+    var era = ERAS[year];
+    if (!era) return;
+    var imgEl = document.getElementById('tl-era-img');
+    if (imgEl) {
+      if (era.img) {
+        imgEl.innerHTML = '<img src="' + era.img + '" alt="' + era.title + '" style="width:100%;height:100%;object-fit:cover;border-radius:12px;transition:opacity .4s ease;" />';
+      } else {
+        imgEl.innerHTML = '<span style="font-size:4rem;line-height:1">' + era.illus + '</span><span style="position:absolute;bottom:8px;right:10px;font-size:.72rem;opacity:.5;font-weight:600">' + era.title + '</span>';
+      }
+      imgEl.style.position = 'relative';
+    }
+    document.getElementById('tl-era-title').textContent = era.title;
+    document.getElementById('tl-turnaround').textContent = era.turnaround;
+    document.getElementById('tl-effort').textContent = era.effort;
+    document.getElementById('tl-cost').innerHTML = '\uD83D\uDCB0 ' + era.cost;
+    document.getElementById('tl-era-text').textContent = era.text;
+    document.getElementById('tl-bar-fill').style.width = era.fill + '%';
+    document.getElementById('tl-effort-fill').style.width = era.effortPct + '%';
+    document.getElementById('tl-effort-fill').textContent = era.effortLabel;
+    document.getElementById('tl-year-badge').textContent = year;
+    document.getElementById('tl-youarehere').style.display = era.youAreHere ? 'block' : 'none';
+
+    document.querySelectorAll('.tl-tick').forEach(function(t) {
+      t.classList.toggle('active', Number(t.dataset.year) === year);
+    });
+  }
+
+  // Wire ticks
+  document.querySelectorAll('.tl-tick').forEach(function(tick) {
+    tick.addEventListener('click', function() {
+      var y = Number(tick.dataset.year);
+      document.getElementById('tl-slider').value = y;
+      render(y);
+    });
+  });
+
+  // Wire slider
+  var slider = document.getElementById('tl-slider');
+  if (slider) {
+    slider.addEventListener('input', function() { render(nearest(Number(slider.value))); });
+    slider.addEventListener('change', function() {
+      var y = nearest(Number(slider.value));
+      slider.value = y;
+      render(y);
+    });
+  }
+
+  // Render initial era with image on page load
+  render(2001);
+})();
+
+// ─── PRELOAD ALL VIDEOS INTO CACHE ────────────────────────
+(function() {
+  var videos = ['SnagIt Demo.mp4', 'Synthesia Video.mp4', 'Without Synthesia Video.mp4'];
+  videos.forEach(function(src) {
+    var vid = document.createElement('video');
+    vid.preload = 'auto';
+    vid.muted = true;
+    vid.style.display = 'none';
+    vid.src = src;
+    document.body.appendChild(vid);
+    vid.load();
+  });
+})();
+
+// ─── INIT ─────────────────────────────────────────────────
+buildQueue();
+renderDots();
+renderSlidesDropdown();
+updateSlidesLabel();
+</script>
+</body>
+</html>
