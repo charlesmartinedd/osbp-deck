@@ -482,26 +482,13 @@ body.fullscreen-mode #ann-show-btn { display: flex; }
     <div class="subtitle">Quick comparison for documentation &amp; training efficiency</div>
   </div>
   <div class="syn-tabs" id="snagit-tabs">
-    <button class="syn-tab active" data-syn="snagit-demo">&#x1F3AC; Video Demo</button>
-    <button class="syn-tab" data-syn="snagit-impact">&#x1F4CA; Impact</button>
+    <button class="syn-tab active" data-syn="snagit-impact">&#x1F4CA; Impact</button>
     <button class="syn-tab" data-syn="snagit-roi">&#x1F4B0; ROI</button>
     <button class="syn-tab" data-syn="snagit-guide">&#x1F4D6; Guide</button>
   </div>
 
-  <!-- VIDEO DEMO -->
-  <div class="syn-section active" id="syn-snagit-demo">
-    <div class="syn-section-header"><span class="syn-section-title">SnagIt Demo</span></div>
-    <div class="syn-video-single syn-reveal-item" data-syn-order="1">
-      <video controls preload="auto" poster="poster-snagit.jpg" style="width:100%;border-radius:8px;">
-        <source src="SnagIt Demo.mp4" type="video/mp4">
-      </video>
-      <p class="syn-video-placeholder">SnagIt screen capture demo &mdash; 3 min overview</p>
-      <a class="hd-link" href="SnagIt Demo.mp4" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>Watch in HD</a>
-    </div>
-  </div>
-
   <!-- IMPACT -->
-  <div class="syn-section" id="syn-snagit-impact">
+  <div class="syn-section active" id="syn-snagit-impact">
     <div class="syn-section-header"><span class="syn-section-title">The Shift</span></div>
     <div class="syn-cards">
       <div class="syn-card syn-reveal-item" data-syn-order="1">
@@ -724,34 +711,12 @@ body.fullscreen-mode #ann-show-btn { display: flex; }
     <div class="subtitle">Comparing our current video pipeline vs. AI-powered avatar video creation</div>
   </div>
   <div class="syn-tabs" id="synthesia-tabs">
-    <button class="syn-tab active" data-syn="syn-demo">&#x1F3AC; Video Demo</button>
-    <button class="syn-tab" data-syn="syn-impact">&#x1F4CA; Impact</button>
+    <button class="syn-tab active" data-syn="syn-impact">&#x1F4CA; Impact</button>
     <button class="syn-tab" data-syn="syn-roi">&#x1F4B0; ROI</button>
   </div>
 
-  <!-- VIDEO DEMO -->
-  <div class="syn-section active" id="syn-syn-demo">
-    <div class="syn-section-header"><span class="syn-section-title">Video Comparison</span></div>
-    <div class="syn-video-grid syn-reveal-item" data-syn-order="1">
-      <div class="syn-video-box">
-        <h3>Without Synthesia</h3>
-        <video controls preload="auto" poster="poster-without.jpg" style="width:100%;border-radius:8px;">
-          <source src="Without Synthesia Video.mp4" type="video/mp4">
-        </video>
-        <a class="hd-link" href="Without Synthesia Video.mp4" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>Watch in HD</a>
-      </div>
-      <div class="syn-video-box">
-        <h3>With Synthesia</h3>
-        <video controls preload="auto" poster="poster-synthesia.jpg" style="width:100%;border-radius:8px;">
-          <source src="Synthesia Video.mp4" type="video/mp4">
-        </video>
-        <a class="hd-link" href="Synthesia Video.mp4" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>Watch in HD</a>
-      </div>
-    </div>
-  </div>
-
   <!-- IMPACT -->
-  <div class="syn-section" id="syn-syn-impact">
+  <div class="syn-section active" id="syn-syn-impact">
     <div class="syn-section-header"><span class="syn-section-title">The Shift</span></div>
     <div class="syn-cards">
       <div class="syn-card syn-reveal-item" data-syn-order="1">
@@ -923,7 +888,7 @@ const DECKS = {
   snagit: {
     label: 'SnagIt Value',
     slideLabel: 'OSBPDeck \u00b7 SnagIt Value',
-    tabOrder: ['snagit-demo', 'snagit-impact', 'snagit-roi', 'snagit-guide'],
+    tabOrder: ['snagit-impact', 'snagit-roi', 'snagit-guide'],
     tabContainer: 'snagit-tabs'
   },
   videoprod: {
@@ -935,13 +900,13 @@ const DECKS = {
   synthesia: {
     label: 'AI Video with Synthesia',
     slideLabel: 'OSBPDeck \u00b7 Synthesia Value',
-    tabOrder: ['syn-demo', 'syn-impact', 'syn-roi'],
+    tabOrder: ['syn-impact', 'syn-roi'],
     tabContainer: 'synthesia-tabs'
   }
 };
 
 let activeDeck = 'snagit';
-let currentTab = 'snagit-demo';
+let currentTab = 'snagit-impact';
 let fullscreen = false;
 let queue = [];
 let queueIndex = 0;
