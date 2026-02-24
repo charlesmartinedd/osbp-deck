@@ -314,10 +314,10 @@ body.fullscreen-mode #deck-synthesia {
 #fullscreen-hint { display: none; position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(26,58,107,.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.2); border-radius: 20px; padding: 8px 20px; color: rgba(255,255,255,.7); font-size: .76rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; gap: 14px; align-items: center; z-index: 10000; }
 #fullscreen-exit { display: none; position: fixed; top: 16px; right: 16px; background: rgba(192,0,0,.85); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.3); border-radius: 8px; padding: 8px 16px; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #fff; cursor: pointer; z-index: 10000; transition: all var(--transition); }
 #fullscreen-exit:hover { background: var(--osbp-red); }
-#fs-prev, #fs-next { display: none; position: fixed; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.15); backdrop-filter: blur(8px); border: 2px solid rgba(255,255,255,.6); border-radius: 50%; width: 60px; height: 60px; color: #fff; font-size: 1.8rem; cursor: pointer; align-items: center; justify-content: center; z-index: 10000; transition: all var(--transition); font-weight: 700; box-shadow: 0 2px 12px rgba(0,0,0,.4); }
-#fs-prev:hover, #fs-next:hover { background: rgba(255,255,255,.3); border-color: #fff; }
-#fs-prev { left: 20px; }
-#fs-next { right: 20px; }
+#fs-prev, #fs-next { display: none; position: fixed; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.08); backdrop-filter: blur(8px); border: 1.5px solid rgba(255,255,255,.25); border-radius: 50%; width: 34px; height: 34px; color: rgba(255,255,255,.6); font-size: 1.1rem; cursor: pointer; align-items: center; justify-content: center; z-index: 10000; transition: all var(--transition); font-weight: 700; box-shadow: 0 1px 6px rgba(0,0,0,.25); }
+#fs-prev:hover, #fs-next:hover { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.5); color: #fff; width: 40px; height: 40px; }
+#fs-prev { left: 10px; }
+#fs-next { right: 10px; }
 body.fullscreen-mode #fs-prev, body.fullscreen-mode #fs-next { display: flex; }
 body.fullscreen-mode #fullscreen-exit { display: flex; }
 #slide-progress { display: none; position: fixed; bottom: 36px; left: 50%; transform: translateX(-50%); gap: 12px; z-index: 10000; }
@@ -357,7 +357,8 @@ body.fullscreen-mode #annotation-bar { display: flex; }
 .ann-size-slider { width: 80px; accent-color: var(--sunrise-gold); }
 .ann-size-num { font-size: .72rem; font-weight: 700; color: rgba(255,255,255,.7); min-width: 18px; }
 #ann-show-btn { display: none; position: fixed; bottom: 20px; right: 20px; width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid rgba(245,204,0,.5); background: rgba(12,20,32,.9); color: #F5CC00; font-size: 1rem; cursor: pointer; z-index: 10001; align-items: center; justify-content: center; }
-body.fullscreen-mode #ann-show-btn { display: flex; }
+body.fullscreen-mode #ann-show-btn { display: none; }
+body.fullscreen-mode #annotation-bar.ann-hidden ~ #ann-show-btn { display: flex; }
 #annotation-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 550; pointer-events: none; cursor: crosshair; }
 #annotation-canvas.active { pointer-events: auto; }
 #annotation-canvas.laser-mode { cursor: none; }
@@ -644,7 +645,7 @@ body.fullscreen-mode #ann-show-btn { display: flex; }
               <div class="tl-badge"><div class="tl-badge-label">Effort / 1-min</div><div class="tl-badge-value" id="tl-effort">~40&ndash;80 hrs</div></div>
             </div>
             <div class="tl-cost-overlay" id="tl-cost">&#x1F4B0; ~$2,000/min</div>
-            <div class="tl-youarehere" id="tl-youarehere">&#x1F4CD; Most DoD teams are here</div>
+            <div class="tl-youarehere" id="tl-youarehere" style="display:none"></div>
           </div>
           <div class="tl-era-right">
             <p class="tl-era-text" id="tl-era-text">Tape-based cameras, linear editing suites, physical media distribution. Every change meant re-recording entire segments.</p>
@@ -685,7 +686,7 @@ body.fullscreen-mode #ann-show-btn { display: flex; }
     <div class="syn-section-header"><span class="syn-section-title">Traditional vs. AI-Powered</span></div>
     <div class="syn-card syn-reveal-item" data-syn-order="1">
       <table class="syn-compare">
-        <thead><tr><th>Aspect</th><th>Traditional Video</th><th>AI-Powered (Synthesia)</th></tr></thead>
+        <thead><tr><th>Aspect</th><th>Traditional Video</th><th>AI-Powered</th></tr></thead>
         <tbody>
           <tr class="syn-reveal-item" data-syn-order="2"><td class="aspect">Production Time</td><td class="bad">4&ndash;8 weeks per video</td><td class="good">Minutes to hours</td></tr>
           <tr class="syn-reveal-item" data-syn-order="3"><td class="aspect">Cost per Minute</td><td class="bad">$1,000&ndash;$5,000+</td><td class="good">$15&ndash;$50</td></tr>
@@ -1320,8 +1321,8 @@ document.getElementById('btn-help').addEventListener('click', function() {
     2001: { illus: '\uD83D\uDCFC', img: 'era-2001.jpg', title: 'Around 2001', turnaround: 'Weeks to months', effort: '~40\u201380 hrs', cost: '~$2,000/min', text: 'Tape-based cameras, linear editing suites, physical media distribution. Every change meant re-recording entire segments.', fill: 90, effortPct: 100, effortLabel: '80 hrs', youAreHere: false },
     2006: { illus: '\uD83D\uDCBF', img: 'era-2006.jpg', title: 'Around 2006', turnaround: 'Weeks', effort: '~30\u201360 hrs', cost: '~$1,200/min', text: 'Early tapeless workflows. Non-linear editing on desktop (Final Cut, Premiere). DVD/streaming distribution emerging.', fill: 72, effortPct: 75, effortLabel: '60 hrs', youAreHere: false },
     2011: { illus: '\u2601\uFE0F', img: 'era-2011.jpg', title: 'Around 2011', turnaround: '1\u20132 weeks', effort: '~20\u201345 hrs', cost: '~$800/min', text: 'Cloud-based review tools. HD as standard. YouTube as distribution. Stock footage libraries growing.', fill: 58, effortPct: 56, effortLabel: '45 hrs', youAreHere: false },
-    2016: { illus: '\uD83C\uDFA5', img: 'era-2016.jpg', title: 'Around 2016', turnaround: 'Days to 1 week', effort: '~12\u201325 hrs', cost: '~$500/min', text: '4K cameras affordable. Drones, gimbals, mobile editing. Remote collaboration becoming possible.', fill: 40, effortPct: 31, effortLabel: '25 hrs', youAreHere: true },
-    2021: { illus: '\uD83E\uDD16', img: 'era-2021.jpg', title: 'Around 2021', turnaround: 'Days', effort: '~8\u201318 hrs', cost: '~$200/min', text: 'Remote capture workflows. AI captions, auto-transcription, virtual backgrounds. Hybrid teams standard.', fill: 26, effortPct: 22, effortLabel: '18 hrs', youAreHere: true },
+    2016: { illus: '\uD83C\uDFA5', img: 'era-2016.jpg', title: 'Around 2016', turnaround: 'Days to 1 week', effort: '~12\u201325 hrs', cost: '~$500/min', text: '4K cameras affordable. Drones, gimbals, mobile editing. Remote collaboration becoming possible.', fill: 40, effortPct: 31, effortLabel: '25 hrs', youAreHere: false },
+    2021: { illus: '\uD83E\uDD16', img: 'era-2021.jpg', title: 'Around 2021', turnaround: 'Days', effort: '~8\u201318 hrs', cost: '~$200/min', text: 'Remote capture workflows. AI captions, auto-transcription, virtual backgrounds. Hybrid teams standard.', fill: 26, effortPct: 22, effortLabel: '18 hrs', youAreHere: false },
     2026: { illus: '\u2728', img: 'era-2026.jpg', title: 'Today (2026)', turnaround: 'Minutes to hours', effort: '~1\u20134 hrs', cost: '~$15/min', text: 'AI-powered video generation (Synthesia, Descript, HeyGen). Type a script, get a polished video. 130+ languages. Near-zero marginal cost.', fill: 10, effortPct: 5, effortLabel: '2 hrs', youAreHere: false }
   };
 
@@ -1397,6 +1398,29 @@ document.getElementById('btn-help').addEventListener('click', function() {
     document.body.appendChild(vid);
     vid.load();
   });
+})();
+
+// ─── QUERY PARAM ROUTING (embed + direct deck) ───────────
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var embed = params.get('embed');
+  var deck = params.get('deck');
+
+  // Embed mode: hide topbar, welcome modal, slide label for clean iframe view
+  if (embed === '1') {
+    document.getElementById('topbar').style.display = 'none';
+    document.getElementById('welcome-backdrop').style.display = 'none';
+    document.getElementById('slide-label').style.display = 'none';
+    // Shift content up since topbar is gone
+    document.body.style.paddingTop = '0';
+  }
+
+  // Direct deck loading via ?deck=snagit|videoprod|synthesia
+  if (deck && DECKS[deck]) {
+    switchDeck(deck);
+    // Also suppress welcome modal for direct links
+    document.getElementById('welcome-backdrop').style.display = 'none';
+  }
 })();
 
 // ─── INIT ─────────────────────────────────────────────────
