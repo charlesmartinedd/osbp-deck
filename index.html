@@ -1069,11 +1069,13 @@ document.querySelectorAll('.syn-canvas').forEach(function(canvas) {
   var pendingClick = null;
   canvas.addEventListener('mousedown', function(e) {
     if (e.button !== 0) return;
+    if (document.getElementById('annotation-canvas').classList.contains('active')) return;
     if (e.target.closest('.syn-tab, .syn-tabs, video, button, a, input, .tl-tick, .tl-slider')) return;
     if (pendingClick) { clearTimeout(pendingClick); pendingClick = null; }
     pendingClick = setTimeout(function() { pendingClick = null; revealNext(); }, 220);
   });
   canvas.addEventListener('dblclick', function(e) {
+    if (document.getElementById('annotation-canvas').classList.contains('active')) return;
     if (e.target.closest('.syn-tab, .syn-tabs, video, button, a, input')) return;
     if (pendingClick) { clearTimeout(pendingClick); pendingClick = null; }
     revealAll();
