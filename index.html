@@ -166,6 +166,18 @@ body.active-deck-synthesia #deck-synthesia { display: block; }
 .pdf-download-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; padding: 10px 22px; border-radius: 8px; border: 1px solid var(--border); background: var(--off-white); color: var(--ink); font-family: var(--font-body); font-size: .92rem; font-weight: 600; cursor: pointer; text-decoration: none; transition: all var(--transition); }
 .pdf-download-btn:hover { background: var(--blue-bg); border-color: var(--blue-mid); color: var(--blue-mid); }
 
+/* Before/After Comparison */
+.compare-header { text-align: center; margin-bottom: 16px; }
+.compare-desc { font-size: .95rem; color: var(--ink2); margin-bottom: 12px; }
+.compare-toggle { display: inline-flex; gap: 8px; }
+.compare-btn { padding: 10px 24px; border-radius: 8px; border: 2px solid var(--border); background: var(--white); font-family: var(--font-body); font-size: .95rem; font-weight: 700; cursor: pointer; transition: all var(--transition); }
+.compare-btn.bad { color: var(--osbp-red); }
+.compare-btn.bad.active { background: var(--osbp-red); color: #fff; border-color: var(--osbp-red); }
+.compare-btn.good { color: var(--green); }
+.compare-btn.good.active { background: var(--green); color: #fff; border-color: var(--green); }
+.compare-viewer { text-align: center; }
+.compare-img { max-width: 100%; border-radius: 10px; box-shadow: var(--shadow-lg); transition: opacity .3s ease; }
+
 /* ─── TIMELINE (Video Production deck) — Apple/Sony polish ─── */
 .tl-wrap { margin-top: 24px; }
 
@@ -280,6 +292,13 @@ body.fullscreen-mode .syn-compare .good { color: #6edba8; }
 body.fullscreen-mode .pdf-viewer-wrap { box-shadow: 0 4px 20px rgba(0,0,0,.4); }
 body.fullscreen-mode .pdf-download-btn { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); color: rgba(255,255,255,.8); }
 body.fullscreen-mode .pdf-download-btn:hover { background: rgba(255,255,255,.2); color: #fff; }
+body.fullscreen-mode .compare-desc { color: rgba(255,255,255,.6); }
+body.fullscreen-mode .compare-btn { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.2); }
+body.fullscreen-mode .compare-btn.bad { color: #ff8a92; }
+body.fullscreen-mode .compare-btn.bad.active { background: var(--osbp-red); color: #fff; border-color: var(--osbp-red); }
+body.fullscreen-mode .compare-btn.good { color: #6edba8; }
+body.fullscreen-mode .compare-btn.good.active { background: var(--green); color: #fff; border-color: var(--green); }
+body.fullscreen-mode .compare-img { box-shadow: 0 8px 40px rgba(0,0,0,.4); }
 body.fullscreen-mode .syn-card-subtitle { color: rgba(255,255,255,.5); }
 /* Timeline in fullscreen */
 body.fullscreen-mode .tl-era-wrap { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.1); box-shadow: 0 4px 20px rgba(0,0,0,.3); }
@@ -483,7 +502,7 @@ body.fullscreen-mode #fs-deck-nav { display: flex; }
   <div class="syn-tabs" id="snagit-tabs">
     <button class="syn-tab active" data-syn="snagit-impact">&#x1F4CA; Impact</button>
     <button class="syn-tab" data-syn="snagit-roi">&#x1F4B0; ROI</button>
-    <button class="syn-tab" data-syn="snagit-guide">&#x1F4D6; Guide</button>
+    <button class="syn-tab" data-syn="snagit-guide">&#x1F50D; Before &amp; After</button>
   </div>
 
   <!-- IMPACT -->
@@ -560,15 +579,20 @@ body.fullscreen-mode #fs-deck-nav { display: flex; }
     </div>
   </div>
 
-  <!-- GUIDE (PDF) -->
+  <!-- BEFORE & AFTER -->
   <div class="syn-section" id="syn-snagit-guide">
-    <div class="syn-section-header"><span class="syn-section-title">Quick Reference Guide</span></div>
+    <div class="syn-section-header"><span class="syn-section-title">Before &amp; After</span></div>
     <div class="syn-card syn-reveal-item" data-syn-order="1">
-      <h3 style="font-size:1.2rem;font-weight:700;color:#15263B;margin-bottom:4px;">Placeholder SnagIt</h3>
-      <div class="pdf-viewer-wrap">
-        <iframe src="snagit-guide.pdf" class="pdf-viewer" title="SnagIt Guide PDF"></iframe>
+      <div class="compare-header">
+        <p class="compare-desc">Same screenshot — one with SnagIt annotations, one without</p>
+        <div class="compare-toggle">
+          <button class="compare-btn bad active" data-img="without-snagit.png">Without SnagIt</button>
+          <button class="compare-btn good" data-img="with-snagit.png">With SnagIt</button>
+        </div>
       </div>
-      <a href="snagit-guide.pdf" download class="pdf-download-btn syn-reveal-item" data-syn-order="2">&#x1F4E5; Download PDF Guide</a>
+      <div class="compare-viewer">
+        <img id="compare-img" src="without-snagit.png" alt="SnagIt comparison" class="compare-img" />
+      </div>
     </div>
   </div>
 
@@ -1421,6 +1445,17 @@ document.getElementById('btn-help').addEventListener('click', function() {
     document.getElementById('welcome-backdrop').style.display = 'none';
   }
 })();
+
+// ─── BEFORE/AFTER COMPARISON TOGGLE ───────────────────────
+document.querySelectorAll('.compare-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.compare-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    var img = document.getElementById('compare-img');
+    img.style.opacity = '0';
+    setTimeout(function() { img.src = btn.dataset.img; img.style.opacity = '1'; }, 200);
+  });
+});
 
 // ─── INIT ─────────────────────────────────────────────────
 buildQueue();
