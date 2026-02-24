@@ -176,7 +176,7 @@ body.active-deck-synthesia #deck-synthesia { display: block; }
 .compare-btn.good { color: var(--green); }
 .compare-btn.good.active { background: var(--green); color: #fff; border-color: var(--green); }
 .compare-viewer { text-align: center; max-width: 1280px; margin: 0 auto; }
-.compare-img { width: 1280px; height: 720px; max-width: 100%; object-fit: contain; border-radius: 10px; box-shadow: var(--shadow-lg); transition: opacity .3s ease; }
+.compare-img { width: 1280px; height: 720px; max-width: 100%; object-fit: contain; border-radius: 10px; box-shadow: var(--shadow-lg); transition: opacity .3s ease; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; }
 
 /* ─── TIMELINE (Video Production deck) — Apple/Sony polish ─── */
 .tl-wrap { margin-top: 24px; }
@@ -586,8 +586,8 @@ body.fullscreen-mode #fs-deck-nav { display: flex; }
       <div class="compare-header">
         <p class="compare-desc">Same screenshot — one with SnagIt annotations, one without</p>
         <div class="compare-toggle">
-          <button class="compare-btn bad" data-img="without-snagit.png">Without SnagIt</button>
-          <button class="compare-btn good" data-img="with-snagit.png">With SnagIt</button>
+          <button class="compare-btn bad" data-img="without-snagit.png?v=2">Without SnagIt</button>
+          <button class="compare-btn good" data-img="with-snagit.png?v=2">With SnagIt</button>
         </div>
       </div>
       <div class="compare-viewer">
